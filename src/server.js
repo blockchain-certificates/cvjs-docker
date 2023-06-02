@@ -7,29 +7,45 @@ server.use(bodyParser.json({ limit: '5mb' }));
 
 const port = 4000;
 
+server.get('/', (req, res) => {
+  res.send(`Cert-verifier-js server is running. POST to /verification endpoint to verify your blockcerts.
+    expected payload: 
+    
+    {
+      body: JSON.stringify({
+        certificate // blockcerts document, only one document at a time
+      }),
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' }
+    }
+  `);
+});
+
 server.post('/verification', async (req, res) => {
-  if (req.body.blockcerts) {
-    const blockcertsData = req.body.blockcerts;
-    const certificate = new certVerifierJs.Certificate(blockcertsData);
+  if (req.body.certificate) {
+    const certData = req.body.certificate;
+    const certificate = new certVerifierJs.Certificate(certData);
     await certificate.init();
     await certificate
       .verify()
       .then(({ status, message }) => {
-        console.log(`${req.body.version} Status:`, status);
+        console.log('Status:', status);
 
         if (status === 'failure') {
           console.log(`The certificate ${req.body.blockcerts.id} is not valid. Error: ${message}`);
         }
 
         return res.json({
-          version: req.body.version,
           status,
           message
         });
       })
       .catch(err => {
-        console.log(req.body.version, err);
-        return err;
+        console.log(err);
+        res.json({
+          statusCode: 500,
+          error: err
+        });
       });
   }
 });
