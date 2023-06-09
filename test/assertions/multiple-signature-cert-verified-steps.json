@@ -1,0 +1,141 @@
+[
+  {
+    "code": "proofVerification",
+    "label": "Proof Verification",
+    "labelPending": "Verifying Proof",
+    "subSteps": [],
+    "suites": [
+      {
+        "proofType": "Ed25519Signature2020",
+        "subSteps": [
+          {
+            "code": "retrieveVerificationMethodPublicKey",
+            "status": "success",
+            "parentStep": "proofVerification",
+            "label": "Extracting Public Key from DID Document"
+          },
+          {
+            "code": "checkDocumentSignature",
+            "status": "success",
+            "parentStep": "proofVerification",
+            "label": "Checking document signature"
+          }
+        ]
+      },
+      {
+        "proofType": "MerkleProof2019",
+        "subSteps": [
+          {
+            "code": "getTransactionId",
+            "status": "success",
+            "parentStep": "proofVerification",
+            "label": "Getting transaction ID"
+          },
+          {
+            "code": "computeLocalHash",
+            "status": "success",
+            "parentStep": "proofVerification",
+            "label": "Computing local hash"
+          },
+          {
+            "code": "fetchRemoteHash",
+            "status": "success",
+            "parentStep": "proofVerification",
+            "label": "Fetching remote hash"
+          },
+          {
+            "code": "compareHashes",
+            "status": "success",
+            "parentStep": "proofVerification",
+            "label": "Comparing hashes"
+          },
+          {
+            "code": "checkMerkleRoot",
+            "status": "success",
+            "parentStep": "proofVerification",
+            "label": "Checking Merkle Root"
+          },
+          {
+            "code": "checkReceipt",
+            "status": "success",
+            "parentStep": "proofVerification",
+            "label": "Checking Receipt"
+          },
+          {
+            "code": "parseIssuerKeys",
+            "status": "success",
+            "parentStep": "proofVerification",
+            "label": "Parsing issuer keys"
+          },
+          {
+            "code": "checkAuthenticity",
+            "status": "success",
+            "parentStep": "proofVerification",
+            "label": "Checking Authenticity"
+          }
+        ]
+      }
+    ],
+    "isLast": false,
+    "status": "success"
+  },
+  {
+    "code": "identityVerification",
+    "label": "Identity verification",
+    "labelPending": "Verifying identity",
+    "subSteps": [
+      {
+        "code": "controlVerificationMethod",
+        "status": "success",
+        "parentStep": "identityVerification",
+        "label": "Controlling Verification Method"
+      }
+    ],
+    "suites": [
+      {
+        "proofType": "Ed25519Signature2020",
+        "subSteps": []
+      },
+      {
+        "proofType": "MerkleProof2019",
+        "subSteps": [
+          {
+            "code": "deriveIssuingAddressFromPublicKey",
+            "status": "success",
+            "parentStep": "identityVerification",
+            "label": "Deriving Issuing Address from Public Key"
+          },
+          {
+            "code": "compareIssuingAddress",
+            "status": "success",
+            "parentStep": "identityVerification",
+            "label": "Comparing addresses"
+          }
+        ]
+      }
+    ],
+    "isLast": false,
+    "status": "success"
+  },
+  {
+    "code": "statusCheck",
+    "label": "Status check",
+    "labelPending": "Checking record status",
+    "subSteps": [
+      {
+        "code": "checkRevokedStatus",
+        "status": "success",
+        "parentStep": "statusCheck",
+        "label": "Checking Revoked Status"
+      },
+      {
+        "code": "checkExpiresDate",
+        "status": "success",
+        "parentStep": "statusCheck",
+        "label": "Checking Expiration Date"
+      }
+    ],
+    "isLast": true,
+    "status": "success"
+  }
+]
