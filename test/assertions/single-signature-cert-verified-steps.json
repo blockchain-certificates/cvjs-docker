@@ -1,0 +1,120 @@
+[
+  {
+    "code": "proofVerification",
+    "isLast": false,
+    "label": "Proof Verification",
+    "labelPending": "Verifying Proof",
+    "status": "success",
+    "subSteps": [],
+    "suites": [
+      {
+        "proofType": "MerkleProof2019",
+        "subSteps": [
+          {
+            "code": "getTransactionId",
+            "label": "Getting transaction ID",
+            "parentStep": "proofVerification",
+            "status": "success"
+          },
+          {
+            "code": "computeLocalHash",
+            "label": "Computing local hash",
+            "parentStep": "proofVerification",
+            "status": "success"
+          },
+          {
+            "code": "fetchRemoteHash",
+            "label": "Fetching remote hash",
+            "parentStep": "proofVerification",
+            "status": "success"
+          },
+          {
+            "code": "compareHashes",
+            "label": "Comparing hashes",
+            "parentStep": "proofVerification",
+            "status": "success"
+          },
+          {
+            "code": "checkMerkleRoot",
+            "label": "Checking Merkle Root",
+            "parentStep": "proofVerification",
+            "status": "success"
+          },
+          {
+            "code": "checkReceipt",
+            "label": "Checking Receipt",
+            "parentStep": "proofVerification",
+            "status": "success"
+          },
+          {
+            "code": "parseIssuerKeys",
+            "label": "Parsing issuer keys",
+            "parentStep": "proofVerification",
+            "status": "success"
+          },
+          {
+            "code": "checkAuthenticity",
+            "label": "Checking Authenticity",
+            "parentStep": "proofVerification",
+            "status": "success"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "code": "identityVerification",
+    "isLast": false,
+    "label": "Identity verification",
+    "labelPending": "Verifying identity",
+    "status": "success",
+    "subSteps": [
+      {
+        "code": "controlVerificationMethod",
+        "label": "Controlling Verification Method",
+        "parentStep": "identityVerification",
+        "status": "success"
+      }
+    ],
+    "suites": [
+      {
+        "proofType": "MerkleProof2019",
+        "subSteps": [
+          {
+            "code": "deriveIssuingAddressFromPublicKey",
+            "label": "Deriving Issuing Address from Public Key",
+            "parentStep": "identityVerification",
+            "status": "success"
+          },
+          {
+            "code": "compareIssuingAddress",
+            "label": "Comparing addresses",
+            "parentStep": "identityVerification",
+            "status": "success"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "code": "statusCheck",
+    "isLast": true,
+    "label": "Status check",
+    "labelPending": "Checking record status",
+    "status": "success",
+    "subSteps": [
+      {
+        "code": "checkRevokedStatus",
+        "label": "Checking Revoked Status",
+        "parentStep": "statusCheck",
+        "status": "success"
+      },
+      {
+        "code": "checkExpiresDate",
+        "label": "Checking Expiration Date",
+        "parentStep": "statusCheck",
+        "status": "success"
+      }
+    ]
+  }
+]

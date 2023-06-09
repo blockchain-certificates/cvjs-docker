@@ -36,6 +36,7 @@ server.post('/verification', async (req, res) => {
         }
 
         return res.json({
+          id: req.body.blockcerts.id,
           status,
           message
         });
