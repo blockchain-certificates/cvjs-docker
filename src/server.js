@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const verboseVerification = require('./middlewares/verbose-verification');
-const basicVerification = require('./middlewares/verbose-verification');
+const basicVerification = require('./middlewares/basic-verification');
 
 const server = express();
 server.use(bodyParser.json({ limit: '5mb' }));
@@ -146,9 +146,11 @@ server.get('/', (req, res) => {
 });
 
 server.post('/verification', async (req, res) => {
+  console.log('calling basic verification endpoint');
   await basicVerification(req, res);
 });
 server.post('/verification/verbose', async (req, res) => {
+  console.log('calling verbose verification endpoint');
   await verboseVerification(req, res);
 });
 
