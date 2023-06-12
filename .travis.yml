@@ -1,0 +1,12 @@
+language: node_js
+branches:
+  only:
+    - main
+services:
+  - docker
+before_script:
+  - npm run test -- --silent --noStackTrace
+script:
+  - docker build . -t cert-verifier-js
+  - docker run -p 9000:4000 -d cert-verifier-js
+  - npm run test:docker

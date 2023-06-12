@@ -51,7 +51,7 @@ server.get('/', (req, res) => {
       "status": "success",
       "message": {
         "label": "Verified",
-        "description": "This is a valid ${chain} certificate.",
+        "description": "This is a valid \${chain} certificate.",
         "linkText": "View transaction link"
       },
       "verificationSteps": [
