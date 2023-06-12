@@ -9,4 +9,4 @@ before_script:
 script:
   - docker build . -t cert-verifier-js
   - docker run -p 9000:4000 -d cert-verifier-js
-  - docker ps
+  - npm run test:docker
