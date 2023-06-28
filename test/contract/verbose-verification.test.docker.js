@@ -38,4 +38,8 @@ describe('basic verification docker endpoint test suite', function () {
   it('should expose the blockchain(s) of the signature(s) of the certificate', function () {
     expect(output.chain).toEqual(['Bitcoin Testnet']);
   });
+
+  it('should expose the issuance date of the certificate in the response', function () {
+    expect(output.issuanceDate).toBe('2022-02-02T15:00:00Z');
+  });
 });

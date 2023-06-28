@@ -7,7 +7,7 @@ const multipleSignatureCertVerifiedStepAssertion = require('../assertions/multip
 const failingSignatureCertVerifiedStepAssertion = require('../assertions/failing-signature-cert-verified-steps.json');
 
 describe('Verbose verification middleware test suite', function () {
-  describe('given it is called with a cert', function () {
+  describe.only('given it is called with a cert', function () {
     let result;
 
     beforeAll(async function () {
@@ -43,6 +43,10 @@ describe('Verbose verification middleware test suite', function () {
 
     it('should expose the blockchain(s) of the signature(s) of the certificate in the response', function () {
       expect(result.chain).toEqual(['Bitcoin Testnet']);
+    });
+
+    it('should expose the issuance date of the certificate in the response', function () {
+      expect(result.issuanceDate).toBe('2022-02-02T15:00:00Z');
     });
   });
 
