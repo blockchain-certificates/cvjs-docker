@@ -64,8 +64,8 @@ and their status.
 *Response*:
 
 ```json
-{
-  "id": "https://blockcerts.learningmachine.com/certificate/ab56912734bb5784bced00b7e0e82ac9",
+ {
+  "id": "urn:uuid:13172c8c-efa5-49e1-9f69-a67ba6bd9937",
   "status": "success",
   "message": {
     "label": "Verified",
@@ -80,7 +80,7 @@ and their status.
       "subSteps": [],
       "suites": [
         {
-          "proofType": "MerkleProof2017",
+          "proofType": "MerkleProof2019",
           "subSteps": [
             {
               "code": "getTransactionId",
@@ -137,6 +137,40 @@ and their status.
       "status": "success"
     },
     {
+      "code": "identityVerification",
+      "label": "Identity verification",
+      "labelPending": "Verifying identity",
+      "subSteps": [
+        {
+          "code": "controlVerificationMethod",
+          "status": "success",
+          "parentStep": "identityVerification",
+          "label": "Controlling Verification Method"
+        }
+      ],
+      "suites": [
+        {
+          "proofType": "MerkleProof2019",
+          "subSteps": [
+            {
+              "code": "deriveIssuingAddressFromPublicKey",
+              "status": "success",
+              "parentStep": "identityVerification",
+              "label": "Deriving Issuing Address from Public Key"
+            },
+            {
+              "code": "compareIssuingAddress",
+              "status": "success",
+              "parentStep": "identityVerification",
+              "label": "Comparing addresses"
+            }
+          ]
+        }
+      ],
+      "isLast": false,
+      "status": "success"
+    },
+    {
       "code": "statusCheck",
       "label": "Status check",
       "labelPending": "Checking record status",
@@ -156,6 +190,30 @@ and their status.
       ],
       "isLast": true,
       "status": "success"
+    }
+  ],
+  "issuanceDate": "2022-02-02T15:00:00Z",
+  "signers": [
+    {
+      "signingDate": "2022-04-05T13:43:10.870521",
+      "signatureSuiteType": "MerkleProof2019",
+      "issuerPublicKey": "mgdWjvq4RYAAP5goUNagTRMx7Xw534S5am",
+      "issuerName": "Blockcerts Organization",
+      "issuerProfileDomain": "www.blockcerts.org",
+      "issuerProfileUrl": "https://www.blockcerts.org/samples/3.0/issuer-blockcerts.json",
+      "chain": {
+        "code": "testnet",
+        "blinkCode": "btc",
+        "name": "Bitcoin Testnet",
+        "signatureValue": "bitcoinTestnet",
+        "transactionTemplates": {
+          "full": "https://testnet.blockchain.info/tx/{transaction_id}",
+          "raw": "https://testnet.blockchain.info/rawtx/{transaction_id}"
+        }
+      },
+      "transactionId": "140ee9382a5c84433b9c89a5d9fea26c47415838b5841deb0c36a8a4b9121f2e",
+      "transactionLink": "https://testnet.blockchain.info/tx/140ee9382a5c84433b9c89a5d9fea26c47415838b5841deb0c36a8a4b9121f2e",
+      "rawTransactionLink": "https://testnet.blockchain.info/rawtx/140ee9382a5c84433b9c89a5d9fea26c47415838b5841deb0c36a8a4b9121f2e"
     }
   ]
 }
