@@ -94,6 +94,15 @@ function updateSubstepIn (parent, substep) {
   }
 }
 
+function getSigners (certificate) {
+  return certificate.signers ?? [];
+}
+
+function getChain (certificate) {
+  const signers = getSigners(certificate);
+  return signers.map(signer => signer.chain?.name);
+}
+
 function stepVerified (verificationSteps, step) {
   const { parentStep } = step;
   const storedParentState = getParentStep(verificationSteps, parentStep);
@@ -119,7 +128,8 @@ async function verboseVerification (req, res) {
       id: req.body.certificate.id,
       status: verification.status,
       message: verification.message,
-      verificationSteps
+      verificationSteps,
+      chain: getChain(certificate)
     });
   }
 }

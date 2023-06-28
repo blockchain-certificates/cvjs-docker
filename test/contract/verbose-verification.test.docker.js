@@ -34,4 +34,8 @@ describe('basic verification docker endpoint test suite', function () {
   it('should expose the verificationSteps detail', function () {
     expect(output.verificationSteps).toEqual(singleSignatureCertVerifiedStepAssertion);
   });
+
+  it('should expose the blockchain(s) of the signature(s) of the certificate', function () {
+    expect(output.chain).toEqual(['Bitcoin Testnet']);
+  });
 });
