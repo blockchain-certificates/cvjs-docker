@@ -35,11 +35,33 @@ describe('basic verification docker endpoint test suite', function () {
     expect(output.verificationSteps).toEqual(singleSignatureCertVerifiedStepAssertion);
   });
 
-  it('should expose the blockchain(s) of the signature(s) of the certificate', function () {
-    expect(output.chain).toEqual(['Bitcoin Testnet']);
-  });
-
   it('should expose the issuance date of the certificate in the response', function () {
     expect(output.issuanceDate).toBe('2022-02-02T15:00:00Z');
+  });
+
+  it('should expose the signers\' information', function () {
+    expect(output.signers).toEqual([
+      {
+        "signingDate": "2022-04-05T13:43:10.870521",
+        "signatureSuiteType": "MerkleProof2019",
+        "issuerPublicKey": "mgdWjvq4RYAAP5goUNagTRMx7Xw534S5am",
+        "issuerName": "Blockcerts Organization",
+        "issuerProfileDomain": "www.blockcerts.org",
+        "issuerProfileUrl": "https://www.blockcerts.org/samples/3.0/issuer-blockcerts.json",
+        "chain": {
+          "code": "testnet",
+          "blinkCode": "btc",
+          "name": "Bitcoin Testnet",
+          "signatureValue": "bitcoinTestnet",
+          "transactionTemplates": {
+            "full": "https://testnet.blockchain.info/tx/{transaction_id}",
+            "raw": "https://testnet.blockchain.info/rawtx/{transaction_id}"
+          }
+        },
+        "transactionId": "140ee9382a5c84433b9c89a5d9fea26c47415838b5841deb0c36a8a4b9121f2e",
+        "transactionLink": "https://testnet.blockchain.info/tx/140ee9382a5c84433b9c89a5d9fea26c47415838b5841deb0c36a8a4b9121f2e",
+        "rawTransactionLink": "https://testnet.blockchain.info/rawtx/140ee9382a5c84433b9c89a5d9fea26c47415838b5841deb0c36a8a4b9121f2e"
+      }
+    ]);
   });
 });

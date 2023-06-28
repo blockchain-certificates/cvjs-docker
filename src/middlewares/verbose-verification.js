@@ -102,11 +102,6 @@ function getBaseDocument (certificate) {
   return certificate.certificateJson;
 }
 
-function getChain (certificate) {
-  const signers = getSigners(certificate);
-  return signers.map(signer => signer.chain?.name);
-}
-
 function getIssuanceDate (certificate) {
   const initialDocument = getBaseDocument(certificate);
   return initialDocument.issuanceDate;
@@ -138,8 +133,8 @@ async function verboseVerification (req, res) {
       status: verification.status,
       message: verification.message,
       verificationSteps,
-      chain: getChain(certificate),
-      issuanceDate: getIssuanceDate(certificate)
+      issuanceDate: getIssuanceDate(certificate),
+      signers: getSigners(certificate)
     });
   }
 }
