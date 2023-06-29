@@ -64,4 +64,10 @@ describe('basic verification docker endpoint test suite', function () {
       }
     ]);
   });
+
+  it('should expose the document\'s metadata', function () {
+    expect(output.metadata).toEqual({
+      classOf: "2022"
+    });
+  });
 });

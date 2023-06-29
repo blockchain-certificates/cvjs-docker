@@ -107,6 +107,16 @@ function getIssuanceDate (certificate) {
   return initialDocument.issuanceDate;
 }
 
+function getMetadata (certificate) {
+  try {
+    return JSON.parse(certificate.metadataJson);
+  } catch {
+    return null;
+  }
+
+  return null;
+}
+
 function stepVerified (verificationSteps, step) {
   const { parentStep } = step;
   const storedParentState = getParentStep(verificationSteps, parentStep);
@@ -134,7 +144,8 @@ async function verboseVerification (req, res) {
       message: verification.message,
       verificationSteps,
       issuanceDate: getIssuanceDate(certificate),
-      signers: getSigners(certificate)
+      signers: getSigners(certificate),
+      metadata: getMetadata(certificate)
     });
   }
 }

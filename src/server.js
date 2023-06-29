@@ -197,7 +197,60 @@ server.get('/', (req, res) => {
             "transactionLink": "https://testnet.blockchain.info/tx/140ee9382a5c84433b9c89a5d9fea26c47415838b5841deb0c36a8a4b9121f2e",
             "rawTransactionLink": "https://testnet.blockchain.info/rawtx/140ee9382a5c84433b9c89a5d9fea26c47415838b5841deb0c36a8a4b9121f2e"
           }
-        ]
+        ],
+        "metadata": {
+          "schema": {
+            "$schema": "http://json-schema.org/draft-04/schema#",
+            "type": "object",
+            "properties": {
+              "displayOrder": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "certificate": {
+                "order": [],
+                "type": "object",
+                "properties": {
+                  "testText": {
+                    "title": "TestText",
+                    "description": "TestText",
+                    "type": "string",
+                    "default": ""
+                  }
+                }
+              },
+              "recipient": {
+                "properties": {
+                  "middlename": {
+                    "title": "middlename",
+                    "type": "string"
+                  },
+                  "city": {
+                    "title": "city",
+                    "type": "string"
+                  },
+                  "country": {
+                    "title": "country",
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "certificate": {
+            "testText": ""
+          },
+          "recipient": {
+            "middlename": "P",
+            "city": "Dallas",
+            "country": "United States"
+          },
+          "displayOrder": [
+            "certificate.testText"
+          ]
+        }
       }
     
   `);
