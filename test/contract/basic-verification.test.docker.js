@@ -1,11 +1,12 @@
 const fetch = require('node-fetch-commonjs');
 const singleSignatureCert = require('../fixtures/single-signature-cert.json');
 
-xdescribe('basic verification docker endpoint test suite', function () {
+describe('basic verification docker endpoint test suite', function () {
   it('should return the expected payload', async function () {
+    const fixture = JSON.parse(JSON.stringify(singleSignatureCert));
     const output = await fetch('http://localhost:9000/verification', {
       body: JSON.stringify({
-        certificate: singleSignatureCert
+        certificate: fixture
       }),
       method: 'POST',
       headers: { 'Content-Type': 'application/json' }
