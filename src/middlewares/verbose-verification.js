@@ -7,7 +7,7 @@
 // }
 
 const certVerifierJs = require('@blockcerts/cert-verifier-js/dist/verifier-node');
-const { Certificate, VERIFICATION_STATUSES } = certVerifierJs;
+const { VERIFICATION_STATUSES } = certVerifierJs;
 
 function initializeVerificationSteps (definition) {
   const steps = JSON.parse(JSON.stringify(definition.verificationSteps));
@@ -126,7 +126,7 @@ function stepVerified (verificationSteps, step) {
   return verificationSteps;
 }
 
-async function verboseVerification (req, res) {
+async function verboseVerification (req, res, certificate) {
   let verificationSteps = initializeVerificationSteps(certificate);
   function verificationCb (verifiedStep) {
     stepVerified(verificationSteps, verifiedStep);

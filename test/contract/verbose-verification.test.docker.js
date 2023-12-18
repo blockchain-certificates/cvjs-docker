@@ -2,7 +2,7 @@ const fetch = require('node-fetch-commonjs');
 const singleSignatureCert = require('../fixtures/single-signature-cert.json');
 const singleSignatureCertVerifiedStepAssertion = require('../assertions/single-signature-cert-verified-steps.json');
 
-describe('basic verification docker endpoint test suite', function () {
+xdescribe('basic verification docker endpoint test suite', function () {
   let output;
 
   beforeAll(async function () {

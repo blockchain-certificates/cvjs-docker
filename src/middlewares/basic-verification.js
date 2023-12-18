@@ -1,5 +1,5 @@
 const certVerifierJs = require('@blockcerts/cert-verifier-js/dist/verifier-node');
-const { Certificate, VERIFICATION_STATUSES } = certVerifierJs;
+const { VERIFICATION_STATUSES } = certVerifierJs;
 
 async function basicVerification (req, res, certificate) {
   await certificate
