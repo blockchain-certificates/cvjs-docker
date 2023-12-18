@@ -1,4 +1,4 @@
-FROM node:16
+FROM node:18
 
 # Create app directory
 WORKDIR /usr/src/app
@@ -11,6 +11,7 @@ COPY package*.json ./
 # development
 # RUN npm install
 
+RUN npm i -g npm@latest
 # production
 RUN npm ci --omit=dev
 
