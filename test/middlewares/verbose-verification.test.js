@@ -5,6 +5,8 @@ const multipleSignatureCert = require('../fixtures/multiple-signature-cert.json'
 const singleSignatureCertVerifiedStepAssertion = require('../assertions/single-signature-cert-verified-steps.json');
 const multipleSignatureCertVerifiedStepAssertion = require('../assertions/multiple-signature-cert-verified-steps.json');
 const failingSignatureCertVerifiedStepAssertion = require('../assertions/failing-signature-cert-verified-steps.json');
+const certVerifierJs = require('@blockcerts/cert-verifier-js/dist/verifier-node');
+const { Certificate } = certVerifierJs;
 
 describe('Verbose verification middleware test suite', function () {
   describe('given it is called with a cert', function () {
@@ -22,7 +24,10 @@ describe('Verbose verification middleware test suite', function () {
           result = verificationResult;
         }
       }
-      await verboseVerification(req, res);
+
+      const certificate = new Certificate(singleSignatureCert);
+      await certificate.init();
+      await verboseVerification(req, res, certificate);
     });
 
     it('should provide the id of the cert in the response', function () {
@@ -93,7 +98,10 @@ describe('Verbose verification middleware test suite', function () {
           result = verificationResult;
         }
       }
-      await verboseVerification(req, res);
+
+      const certificate = new Certificate(singleSignatureCert);
+      await certificate.init();
+      await verboseVerification(req, res, certificate);
       expect(result.verificationSteps).toEqual(singleSignatureCertVerifiedStepAssertion);
     });
   });
@@ -113,7 +121,9 @@ describe('Verbose verification middleware test suite', function () {
           result = verificationResult;
         }
       }
-      await verboseVerification(req, res);
+      const certificate = new Certificate(multipleSignatureCert);
+      await certificate.init();
+      await verboseVerification(req, res, certificate);
       expect(result.verificationSteps).toEqual(multipleSignatureCertVerifiedStepAssertion);
     });
   });
@@ -133,7 +143,9 @@ describe('Verbose verification middleware test suite', function () {
           result = verificationResult;
         }
       }
-      await verboseVerification(req, res);
+      const certificate = new Certificate(failingSignatureCert);
+      await certificate.init();
+      await verboseVerification(req, res, certificate);
       expect(result.verificationSteps).toEqual(failingSignatureCertVerifiedStepAssertion);
     });
   });
