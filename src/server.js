@@ -256,13 +256,24 @@ server.get('/', (req, res) => {
   `);
 });
 
+async function initCertVerifierJs (req) {
+  if (req.body.certificate) {
+    const certData = req.body.certificate;
+    const certificate = new Certificate(certData);
+    await certificate.init();
+    return certificate;
+  }
+}
+
 server.post('/verification', async (req, res) => {
   console.log('calling basic verification endpoint');
-  await basicVerification(req, res);
+  const certificate = await initCertVerifierJs(req);
+  await basicVerification(req, res, certificate);
 });
 server.post('/verification/verbose', async (req, res) => {
   console.log('calling verbose verification endpoint');
-  await verboseVerification(req, res);
+  const certificate = await initCertVerifierJs(req);
+  await verboseVerification(req, res, certificate);
 });
 
 server.listen(port, () => {

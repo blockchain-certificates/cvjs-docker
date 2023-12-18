@@ -127,27 +127,22 @@ function stepVerified (verificationSteps, step) {
 }
 
 async function verboseVerification (req, res) {
-  if (req.body.certificate) {
-    const certData = req.body.certificate;
-    const certificate = new Certificate(certData);
-    await certificate.init();
-    let verificationSteps = initializeVerificationSteps(certificate);
-    function verificationCb (verifiedStep) {
-      stepVerified(verificationSteps, verifiedStep);
-    }
-
-    const verification = await certificate.verify(verificationCb);
-
-    res.json({
-      id: req.body.certificate.id,
-      status: verification.status,
-      message: verification.message,
-      verificationSteps,
-      issuanceDate: getIssuanceDate(certificate),
-      signers: getSigners(certificate),
-      metadata: getMetadata(certificate)
-    });
+  let verificationSteps = initializeVerificationSteps(certificate);
+  function verificationCb (verifiedStep) {
+    stepVerified(verificationSteps, verifiedStep);
   }
+
+  const verification = await certificate.verify(verificationCb);
+
+  res.json({
+    id: req.body.certificate.id,
+    status: verification.status,
+    message: verification.message,
+    verificationSteps,
+    issuanceDate: getIssuanceDate(certificate),
+    signers: getSigners(certificate),
+    metadata: getMetadata(certificate)
+  });
 }
 
 module.exports = verboseVerification;
