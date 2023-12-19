@@ -27,7 +27,7 @@ describe('Verbose verification middleware test suite', function () {
 
       const certificate = new Certificate(singleSignatureCert);
       await certificate.init();
-      await verboseVerification(req, res, certificate);
+      await verboseVerification(req as any, res as any, certificate);
     });
 
     it('should provide the id of the cert in the response', function () {
@@ -101,7 +101,7 @@ describe('Verbose verification middleware test suite', function () {
 
       const certificate = new Certificate(singleSignatureCert);
       await certificate.init();
-      await verboseVerification(req, res, certificate);
+      await verboseVerification(req as any, res as any, certificate);
       expect(result.verificationSteps).toEqual(singleSignatureCertVerifiedStepAssertion);
     });
   });
@@ -123,7 +123,7 @@ describe('Verbose verification middleware test suite', function () {
       }
       const certificate = new Certificate(multipleSignatureCert);
       await certificate.init();
-      await verboseVerification(req, res, certificate);
+      await verboseVerification(req as any, res as any, certificate);
       expect(result.verificationSteps).toEqual(multipleSignatureCertVerifiedStepAssertion);
     });
   });
@@ -145,7 +145,7 @@ describe('Verbose verification middleware test suite', function () {
       }
       const certificate = new Certificate(failingSignatureCert);
       await certificate.init();
-      await verboseVerification(req, res, certificate);
+      await verboseVerification(req as any, res as any, certificate);
       expect(result.verificationSteps).toEqual(failingSignatureCertVerifiedStepAssertion);
     });
   });

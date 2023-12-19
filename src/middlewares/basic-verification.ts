@@ -1,7 +1,12 @@
 import certVerifierJs from '@blockcerts/cert-verifier-js/dist/verifier-node';
+import type { APIResponse } from '../models/APIResponse';
+import type { Request, Response } from 'express';
+import type { APIPayload } from  '../models/APIPayload';
+import type { Certificate } from '@blockcerts/cert-verifier-js';
+
 const { VERIFICATION_STATUSES } = certVerifierJs;
 
-export default async function basicVerification (req, res, certificate) {
+export default async function basicVerification (req: Request<{}, {}, APIPayload>, res: Response<APIResponse>, certificate: Certificate) {
   await certificate
     .verify()
     .then(({ status, message }) => {
@@ -20,8 +25,9 @@ export default async function basicVerification (req, res, certificate) {
     .catch(err => {
       console.log(err);
       res.json({
-        statusCode: 500,
-        error: err
+        id: req.body.certificate.id,
+        status: VERIFICATION_STATUSES.FAILURE,
+        message: err
       });
     });
 }

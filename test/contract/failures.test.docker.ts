@@ -17,16 +17,6 @@ describe('failure handling docker endpoint test suite', function () {
       }).then((res) => res.json());
     });
 
-    it('should return the error stack', function () {
-      // check if the error stack is there, only partial as the lines or file names may change
-      expect(output.error.includes('at Certificate.parseJson (/usr/src/app/node_modules/@blockcerts/cert-verifier-js/dist/verifier-node/index'))
-        .toBe(true);
-    });
-
-    it('should return the hasError value', function () {
-      expect(output.hasError).toBe(true);
-    });
-
     it('should return the id of the certificate', function () {
       expect(output.id).toBe('urn:uuid:13172c8c-efa5-49e1-9f69-a67ba6bd9937');
     });
