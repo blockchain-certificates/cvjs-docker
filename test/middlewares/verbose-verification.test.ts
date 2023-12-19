@@ -1,11 +1,11 @@
-const verboseVerification = require('../../src/middlewares/verbose-verification');
-const singleSignatureCert = require('../fixtures/single-signature-cert.json');
-const failingSignatureCert = require('../fixtures/failing-signature-cert.json');
-const multipleSignatureCert = require('../fixtures/multiple-signature-cert.json');
-const singleSignatureCertVerifiedStepAssertion = require('../assertions/single-signature-cert-verified-steps.json');
-const multipleSignatureCertVerifiedStepAssertion = require('../assertions/multiple-signature-cert-verified-steps.json');
-const failingSignatureCertVerifiedStepAssertion = require('../assertions/failing-signature-cert-verified-steps.json');
-const certVerifierJs = require('@blockcerts/cert-verifier-js/dist/verifier-node');
+import verboseVerification from '../../src/middlewares/verbose-verification';
+import singleSignatureCert from '../fixtures/single-signature-cert.json';
+import failingSignatureCert from '../fixtures/failing-signature-cert.json';
+import multipleSignatureCert from '../fixtures/multiple-signature-cert.json';
+import singleSignatureCertVerifiedStepAssertion from '../assertions/single-signature-cert-verified-steps.json';
+import multipleSignatureCertVerifiedStepAssertion from '../assertions/multiple-signature-cert-verified-steps.json';
+import failingSignatureCertVerifiedStepAssertion from '../assertions/failing-signature-cert-verified-steps.json';
+import certVerifierJs from '@blockcerts/cert-verifier-js/dist/verifier-node';
 const { Certificate } = certVerifierJs;
 
 describe('Verbose verification middleware test suite', function () {

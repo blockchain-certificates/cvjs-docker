@@ -1,6 +1,6 @@
-const fetch = require('node-fetch-commonjs');
-const singleSignatureCert = require('../fixtures/single-signature-cert.json');
-const failingSignatureCert = require('../fixtures/failing-signature-cert.json');
+import fetch from 'node-fetch-commonjs';
+import singleSignatureCert from '../fixtures/single-signature-cert.json';
+import failingSignatureCert from '../fixtures/failing-signature-cert.json';
 
 describe('basic verification docker endpoint test suite', function () {
   describe('when the certificate is valid', function () {

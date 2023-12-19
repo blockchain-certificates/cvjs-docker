@@ -1,9 +1,9 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const verboseVerification = require('./middlewares/verbose-verification');
-const basicVerification = require('./middlewares/basic-verification');
-const apiDocumentationResponse = require('./middlewares/api-documentation-response');
-const certVerifierJs = require('@blockcerts/cert-verifier-js/dist/verifier-node');
+import express from 'express';
+import bodyParser from 'body-parser';
+import verboseVerification from './middlewares/verbose-verification';
+import basicVerification from './middlewares/basic-verification';
+import apiDocumentationResponse from './middlewares/api-documentation-response';
+import certVerifierJs from '@blockcerts/cert-verifier-js/dist/verifier-node';
 const { Certificate, VERIFICATION_STATUSES } = certVerifierJs;
 
 const server = express();

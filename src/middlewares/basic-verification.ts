@@ -1,7 +1,7 @@
-const certVerifierJs = require('@blockcerts/cert-verifier-js/dist/verifier-node');
+import certVerifierJs from '@blockcerts/cert-verifier-js/dist/verifier-node';
 const { VERIFICATION_STATUSES } = certVerifierJs;
 
-async function basicVerification (req, res, certificate) {
+export default async function basicVerification (req, res, certificate) {
   await certificate
     .verify()
     .then(({ status, message }) => {
@@ -25,5 +25,3 @@ async function basicVerification (req, res, certificate) {
       });
     });
 }
-
-module.exports = basicVerification;

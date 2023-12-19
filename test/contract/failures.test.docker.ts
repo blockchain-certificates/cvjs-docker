@@ -1,5 +1,5 @@
-const fetch = require('node-fetch-commonjs');
-const singleSignatureCert = require('../fixtures/single-signature-cert.json');
+import fetch from 'node-fetch-commonjs';
+import singleSignatureCert from '../fixtures/single-signature-cert.json';
 
 describe('failure handling docker endpoint test suite', function () {
   describe('when there is a failure getting the issuer profile', function () {

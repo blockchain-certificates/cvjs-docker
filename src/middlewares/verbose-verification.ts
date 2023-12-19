@@ -6,7 +6,7 @@
 //   parentStep: string;
 // }
 
-const certVerifierJs = require('@blockcerts/cert-verifier-js/dist/verifier-node');
+import certVerifierJs from '@blockcerts/cert-verifier-js/dist/verifier-node';
 const { VERIFICATION_STATUSES } = certVerifierJs;
 
 function initializeVerificationSteps (definition) {
@@ -126,7 +126,7 @@ function stepVerified (verificationSteps, step) {
   return verificationSteps;
 }
 
-async function verboseVerification (req, res, certificate) {
+export default async function verboseVerification (req, res, certificate) {
   let verificationSteps = initializeVerificationSteps(certificate);
   function verificationCb (verifiedStep) {
     stepVerified(verificationSteps, verifiedStep);
@@ -144,5 +144,3 @@ async function verboseVerification (req, res, certificate) {
     metadata: getMetadata(certificate)
   });
 }
-
-module.exports = verboseVerification;

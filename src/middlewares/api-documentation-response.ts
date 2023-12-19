@@ -1,4 +1,4 @@
-function apiDocumentationResponse (req, res) {
+export default function apiDocumentationResponse (req, res) {
   res.send(`Cert-verifier-js server is running. 
   
   ** POST to /verification endpoint to verify your blockcerts.
@@ -245,5 +245,3 @@ function apiDocumentationResponse (req, res) {
     
   `);
 }
-
-module.exports = apiDocumentationResponse;
