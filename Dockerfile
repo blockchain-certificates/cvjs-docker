@@ -11,7 +11,6 @@ COPY package*.json ./
 # development
 # RUN npm install
 
-RUN npm i -g npm@latest
 # production
 RUN npm ci --omit=dev
 
