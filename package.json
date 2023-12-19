@@ -6,7 +6,9 @@
   "scripts": {
     "test": "jest",
     "test:watch": "npm run test -- --watch",
-    "test:docker": "jest --testRegex \"/*(.test.docker.js)\""
+    "test:docker": "jest --testRegex \"/*(.test.docker.js)\"",
+    "build": "docker build . -t cert-verifier-js",
+    "start": "docker run -p 9000:4000 -d cert-verifier-js"
   },
   "repository": {
     "type": "git",
@@ -28,12 +30,13 @@
   },
   "homepage": "https://github.com/blockchain-certificates/cvjs-docker#readme",
   "dependencies": {
-    "@blockcerts/cert-verifier-js": "^6.6.1",
+    "@blockcerts/cert-verifier-js": "^6.10.0",
     "body-parser": "^1.20.2",
     "express": "^4.18.2"
   },
   "devDependencies": {
     "jest": "^29.5.0",
-    "node-fetch-commonjs": "^3.2.4"
+    "node-fetch-commonjs": "^3.2.4",
+    "typescript": "^5.3.3"
   }
 }
