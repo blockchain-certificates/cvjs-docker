@@ -4,9 +4,10 @@ import verboseVerification, { type VerboseVerificationAPIResponse } from './midd
 import basicVerification from './middlewares/basic-verification';
 import apiDocumentationResponse from './middlewares/api-documentation-response';
 import certVerifierJs from '@blockcerts/cert-verifier-js/dist/verifier-node';
-import type { Certificate, VERIFICATION_STATUSES } from '@blockcerts/cert-verifier-js';
+import type { Certificate as TCertificate, VERIFICATION_STATUSES as E_VERIFICATION_STATUSES } from '@blockcerts/cert-verifier-js';
 import type { APIResponse } from './models/APIResponse';
 import type { APIPayload } from  './models/APIPayload';
+
 const { Certificate, VERIFICATION_STATUSES } = certVerifierJs;
 
 const server = express();
@@ -22,10 +23,10 @@ export interface CertificateInitError {
   hasError: boolean;
   message: string;
   error: string;
-  status: VERIFICATION_STATUSES.FAILURE;
+  status: E_VERIFICATION_STATUSES.FAILURE;
 }
 
-async function initCertVerifierJs (req): Promise<Certificate | CertificateInitError> {
+async function initCertVerifierJs (req): Promise<TCertificate | CertificateInitError> {
   if (req.body.certificate) {
     const certData = req.body.certificate;
     try {
@@ -63,7 +64,7 @@ server.post('/verification', async (req: Request<{}, {}, APIPayload>, res: Respo
     return;
   }
 
-  await basicVerification(req, res, certificate as Certificate);
+  await basicVerification(req, res, certificate as TCertificate);
 });
 server.post('/verification/verbose', async (req: Request<{}, {}, APIPayload>, res: Response<VerboseVerificationAPIResponse | APIResponse>): Promise<void> => {
   console.log('calling verbose verification endpoint');
@@ -81,7 +82,7 @@ server.post('/verification/verbose', async (req: Request<{}, {}, APIPayload>, re
     return;
   }
 
-  await verboseVerification(req, res, certificate as Certificate);
+  await verboseVerification(req, res, certificate as TCertificate);
 });
 
 server.listen(port, () => {
