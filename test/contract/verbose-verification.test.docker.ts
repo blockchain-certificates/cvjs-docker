@@ -1,8 +1,8 @@
-const fetch = require('node-fetch-commonjs');
-const singleSignatureCert = require('../fixtures/single-signature-cert.json');
-const singleSignatureCertVerifiedStepAssertion = require('../assertions/single-signature-cert-verified-steps.json');
-const failingSignatureCert = require('../fixtures/failing-signature-cert.json');
-const failingSignatureCertVerifiedStepAssertion = require('../assertions/failing-signature-cert-verified-steps.json');
+import fetch from 'node-fetch-commonjs';
+import singleSignatureCert from '../fixtures/single-signature-cert.json';
+import singleSignatureCertVerifiedStepAssertion from '../assertions/single-signature-cert-verified-steps.json';
+import failingSignatureCert from '../fixtures/failing-signature-cert.json';
+import failingSignatureCertVerifiedStepAssertion from '../assertions/failing-signature-cert-verified-steps.json';
 
 describe('verbose verification docker endpoint test suite', function () {
   let output;

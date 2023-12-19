@@ -6,11 +6,31 @@
 //   parentStep: string;
 // }
 
-const certVerifierJs = require('@blockcerts/cert-verifier-js/dist/verifier-node');
+import certVerifierJs from '@blockcerts/cert-verifier-js/dist/verifier-node';
+import type {
+  Certificate,
+  Signers,
+  Blockcerts,
+  IVerificationMapItem,
+  VerificationSubstep,
+  BlockcertsV3,
+  BlockcertsV2
+} from '@blockcerts/cert-verifier-js'
+import type { Request, Response } from 'express';
+import type { APIResponse } from '../models/APIResponse';
+import type { APIPayload } from  '../models/APIPayload';
+
 const { VERIFICATION_STATUSES } = certVerifierJs;
 
-function initializeVerificationSteps (definition) {
-  const steps = JSON.parse(JSON.stringify(definition.verificationSteps));
+export interface VerboseVerificationAPIResponse extends APIResponse {
+  verificationSteps: IVerificationMapItem[];
+  issuanceDate: string;
+  signers: Signers[];
+  metadata: string | null;
+}
+
+function initializeVerificationSteps (certificate: Certificate): IVerificationMapItem[] {
+  const steps = JSON.parse(JSON.stringify(certificate.verificationSteps));
   return steps.map((step, i) => ({
     ...step,
     isLast: i === steps.length - 1,
@@ -19,15 +39,15 @@ function initializeVerificationSteps (definition) {
 }
 
 
-function stepVerificationIsSuccessful (step) {
+function stepVerificationIsSuccessful (step: VerificationSubstep): boolean {
   return step.status === VERIFICATION_STATUSES.SUCCESS;
 }
 
-function stepVerificationIsFailure (step) {
+function stepVerificationIsFailure (step: VerificationSubstep): boolean {
   return step.status === VERIFICATION_STATUSES.FAILURE;
 }
 
-function oneChildIsSuccess (parent) {
+function oneChildIsSuccess (parent: IVerificationMapItem): boolean {
   let suiteVerification = true;
   if (parent.suites?.length) {
     suiteVerification = parent.suites?.flatMap(suite => suite.subSteps).some(stepVerificationIsSuccessful);
@@ -35,7 +55,7 @@ function oneChildIsSuccess (parent) {
   return suiteVerification || parent.subSteps.some(stepVerificationIsSuccessful);
 }
 
-function allChildrenAreSuccess (parent) {
+function allChildrenAreSuccess (parent: IVerificationMapItem): boolean {
   let suiteVerification = true;
   if (parent.suites?.length) {
     suiteVerification = parent.suites?.flatMap(suite => suite.subSteps).every(stepVerificationIsSuccessful);
@@ -43,7 +63,7 @@ function allChildrenAreSuccess (parent) {
   return suiteVerification && parent.subSteps.every(stepVerificationIsSuccessful);
 }
 
-function oneChildIsFailure (parent) {
+function oneChildIsFailure (parent: IVerificationMapItem): boolean {
   let suiteVerification = false;
   if (parent.suites?.length) {
     suiteVerification = parent.suites?.flatMap(suite => suite.subSteps).some(stepVerificationIsFailure);
@@ -51,7 +71,7 @@ function oneChildIsFailure (parent) {
   return suiteVerification || parent.subSteps.some(stepVerificationIsFailure);
 }
 
-function updateParentStepStatus (verificationSteps, parentStepCode) {
+function updateParentStepStatus (verificationSteps: IVerificationMapItem[], parentStepCode: string) {
   if (parentStepCode == null) {
     return;
   }
@@ -74,11 +94,11 @@ function updateParentStepStatus (verificationSteps, parentStepCode) {
   parent.status = status;
 }
 
-function getParentStep (verificationSteps, parentStepCode) {
+function getParentStep (verificationSteps: IVerificationMapItem[], parentStepCode: string): IVerificationMapItem {
   return verificationSteps.find(step => step.code === parentStepCode);
 }
 
-function updateSubstepIn (parent, substep) {
+function updateSubstepIn (parent: IVerificationMapItem, substep: VerificationSubstep): void {
   let substepIndex = parent.subSteps.findIndex(s => s.code === substep.code);
   if (substepIndex > -1) {
     parent.subSteps[substepIndex] = substep;
@@ -94,20 +114,20 @@ function updateSubstepIn (parent, substep) {
   }
 }
 
-function getSigners (certificate) {
+function getSigners (certificate: Certificate): Signers[] {
   return certificate.signers ?? [];
 }
 
-function getBaseDocument (certificate) {
+function getBaseDocument (certificate: Certificate): Blockcerts {
   return certificate.certificateJson;
 }
 
-function getIssuanceDate (certificate) {
+function getIssuanceDate (certificate: Certificate): string {
   const initialDocument = getBaseDocument(certificate);
-  return initialDocument.issuanceDate;
+  return (initialDocument as BlockcertsV3).issuanceDate ?? (initialDocument as BlockcertsV2).issuedOn;
 }
 
-function getMetadata (certificate) {
+function getMetadata (certificate: Certificate): string | null {
   try {
     return JSON.parse(certificate.metadataJson);
   } catch {
@@ -117,7 +137,7 @@ function getMetadata (certificate) {
   return null;
 }
 
-function stepVerified (verificationSteps, step) {
+function stepVerified (verificationSteps: IVerificationMapItem[], step: VerificationSubstep): IVerificationMapItem[] {
   const { parentStep } = step;
   const storedParentState = getParentStep(verificationSteps, parentStep);
   updateSubstepIn(storedParentState, step);
@@ -126,7 +146,7 @@ function stepVerified (verificationSteps, step) {
   return verificationSteps;
 }
 
-async function verboseVerification (req, res, certificate) {
+export default async function verboseVerification (req: Request<{}, {}, APIPayload>, res: Response<VerboseVerificationAPIResponse>, certificate: Certificate): Promise<void> {
   let verificationSteps = initializeVerificationSteps(certificate);
   function verificationCb (verifiedStep) {
     stepVerified(verificationSteps, verifiedStep);
@@ -144,5 +164,3 @@ async function verboseVerification (req, res, certificate) {
     metadata: getMetadata(certificate)
   });
 }
-
-module.exports = verboseVerification;

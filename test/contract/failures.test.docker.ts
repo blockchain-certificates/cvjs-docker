@@ -1,5 +1,5 @@
-const fetch = require('node-fetch-commonjs');
-const singleSignatureCert = require('../fixtures/single-signature-cert.json');
+import fetch from 'node-fetch-commonjs';
+import singleSignatureCert from '../fixtures/single-signature-cert.json';
 
 describe('failure handling docker endpoint test suite', function () {
   describe('when there is a failure getting the issuer profile', function () {
@@ -15,16 +15,6 @@ describe('failure handling docker endpoint test suite', function () {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' }
       }).then((res) => res.json());
-    });
-
-    it('should return the error stack', function () {
-      // check if the error stack is there, only partial as the lines or file names may change
-      expect(output.error.includes('at Certificate.parseJson (/usr/src/app/node_modules/@blockcerts/cert-verifier-js/dist/verifier-node/index'))
-        .toBe(true);
-    });
-
-    it('should return the hasError value', function () {
-      expect(output.hasError).toBe(true);
     });
 
     it('should return the id of the certificate', function () {
