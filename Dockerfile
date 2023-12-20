@@ -8,13 +8,12 @@ WORKDIR /usr/src/app
 # where available (npm@5+)
 COPY package*.json ./
 
-RUN npm ci
+
+ENV NODE_ENV=production
+RUN npm ci --omit=dev
 
 # Bundle app source
 COPY . .
-
-# transpile typescript
-RUN npx tsc
 
 EXPOSE 4000
 CMD [ "node", "src/server.js" ]

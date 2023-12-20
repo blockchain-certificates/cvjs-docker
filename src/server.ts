@@ -48,7 +48,7 @@ async function initCertVerifierJs (req): Promise<TCertificate | CertificateInitE
   return null;
 }
 
-server.post('/verification', async (req: Request<unknown, unknown, APIPayload>, res: Response<APIResponse>): void => {
+server.post('/verification', async (req: Request<unknown, unknown, APIPayload>, res: Response<APIResponse>): Promise<void> => {
   console.log('calling basic verification endpoint');
   const certificate = await initCertVerifierJs(req);
   if (certificate == null) {
@@ -66,7 +66,7 @@ server.post('/verification', async (req: Request<unknown, unknown, APIPayload>, 
 
   basicVerification(req, res, certificate as TCertificate);
 });
-server.post('/verification/verbose', async (req: Request<unknown, unknown, APIPayload>, res: Response<VerboseVerificationAPIResponse | APIResponse>): void => {
+server.post('/verification/verbose', async (req: Request<unknown, unknown, APIPayload>, res: Response<VerboseVerificationAPIResponse | APIResponse>): Promise<void> => {
   console.log('calling verbose verification endpoint');
   const certificate = await initCertVerifierJs(req);
   if (certificate == null) {

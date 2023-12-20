@@ -8,7 +8,8 @@
     "test": "jest",
     "test:watch": "npm run test -- --watch",
     "test:docker": "jest --testRegex \"/*(.test.docker.ts)\"",
-    "build": "docker build . -t cert-verifier-js",
+    "compile": "tsc",
+    "build": "npm run compile && docker build . -t cert-verifier-js && git clean -df",
     "start": "docker run -p 9000:4000 -d cert-verifier-js",
     "prepare": "husky install"
   },

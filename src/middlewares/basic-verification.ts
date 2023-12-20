@@ -6,7 +6,7 @@ import type { Certificate } from '@blockcerts/cert-verifier-js';
 
 const { VERIFICATION_STATUSES } = certVerifierJs;
 
-export default async function basicVerification (req: Request<unknown, unknown, APIPayload>, res: Response<APIResponse>, certificate: Certificate): void {
+export default async function basicVerification (req: Request<unknown, unknown, APIPayload>, res: Response<APIResponse>, certificate: Certificate): Promise<void> {
   await certificate
     .verify()
     .then(({ status, message }) => {
