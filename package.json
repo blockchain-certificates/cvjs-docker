@@ -9,7 +9,8 @@
     "test:watch": "npm run test -- --watch",
     "test:docker": "jest --testRegex \"/*(.test.docker.ts)\"",
     "build": "docker build . -t cert-verifier-js",
-    "start": "docker run -p 9000:4000 -d cert-verifier-js"
+    "start": "docker run -p 9000:4000 -d cert-verifier-js",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -47,11 +48,11 @@
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-n": "^16.5.0",
     "eslint-plugin-promise": "^6.1.1",
-    "husky": "^8.0.3",
     "jest": "^29.5.0",
     "node-fetch-commonjs": "^3.2.4",
     "ts-jest": "^29.1.1",
     "tslib": "^2.6.2",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "husky": "^8.0.0"
   }
 }
