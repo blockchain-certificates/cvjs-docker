@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express';
 
-export default function apiDocumentationResponse (req: Request, res: Response<string>) {
+export default function apiDocumentationResponse (req: Request, res: Response<string>): void {
   res.send(`Cert-verifier-js server is running. 
   
   ** POST to /verification endpoint to verify your blockcerts.

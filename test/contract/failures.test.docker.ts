@@ -14,7 +14,7 @@ describe('failure handling docker endpoint test suite', function () {
         }),
         method: 'POST',
         headers: { 'Content-Type': 'application/json' }
-      }).then((res) => res.json());
+      }).then(async (res) => await res.json());
     });
 
     it('should return the id of the certificate', function () {

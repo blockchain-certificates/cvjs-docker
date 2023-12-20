@@ -12,13 +12,14 @@ describe('basic verification docker endpoint test suite', function () {
         }),
         method: 'POST',
         headers: { 'Content-Type': 'application/json' }
-      }).then((res) => res.json());
+      }).then(async (res) => await res.json());
 
       expect(output).toEqual({
         id: 'urn:uuid:13172c8c-efa5-49e1-9f69-a67ba6bd9937',
         status: 'success',
         message: {
           label: 'Verified',
+          // eslint-disable-next-line no-template-curly-in-string
           description: 'This is a valid ${chain} certificate.',
           linkText: 'View transaction link'
         }
@@ -35,7 +36,7 @@ describe('basic verification docker endpoint test suite', function () {
         }),
         method: 'POST',
         headers: { 'Content-Type': 'application/json' }
-      }).then((res) => res.json());
+      }).then(async (res) => await res.json());
 
       expect(output).toEqual({
         id: '13172c8c-efa5-49e1-9f69-a67ba6bd9937',

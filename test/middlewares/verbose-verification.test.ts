@@ -23,10 +23,11 @@ describe('Verbose verification middleware test suite', function () {
         json: function (verificationResult) {
           result = verificationResult;
         }
-      }
+      };
 
       const certificate = new Certificate(singleSignatureCert);
       await certificate.init();
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       await verboseVerification(req as any, res as any, certificate);
     });
 
@@ -41,6 +42,7 @@ describe('Verbose verification middleware test suite', function () {
     it('should provide the message of the verification in the response', function () {
       expect(result.message).toEqual({
         label: 'Verified',
+        // eslint-disable-next-line no-template-curly-in-string
         description: 'This is a valid ${chain} certificate.',
         linkText: 'View transaction link'
       });
@@ -53,32 +55,32 @@ describe('Verbose verification middleware test suite', function () {
     it('should expose the signers of the certificate in the response', function () {
       expect(result.signers).toEqual([
         {
-          "signingDate": "2022-04-05T13:43:10.870521",
-          "signatureSuiteType": "MerkleProof2019",
-          "issuerPublicKey": "mgdWjvq4RYAAP5goUNagTRMx7Xw534S5am",
-          "issuerName": "Blockcerts Organization",
-          "issuerProfileDomain": "www.blockcerts.org",
-          "issuerProfileUrl": "https://www.blockcerts.org/samples/3.0/issuer-blockcerts.json",
-          "chain": {
-            "code": "testnet",
-            "blinkCode": "btc",
-            "name": "Bitcoin Testnet",
-            "signatureValue": "bitcoinTestnet",
-            "transactionTemplates": {
-              "full": "https://testnet.blockchain.info/tx/{transaction_id}",
-              "raw": "https://testnet.blockchain.info/rawtx/{transaction_id}"
+          signingDate: '2022-04-05T13:43:10.870521',
+          signatureSuiteType: 'MerkleProof2019',
+          issuerPublicKey: 'mgdWjvq4RYAAP5goUNagTRMx7Xw534S5am',
+          issuerName: 'Blockcerts Organization',
+          issuerProfileDomain: 'www.blockcerts.org',
+          issuerProfileUrl: 'https://www.blockcerts.org/samples/3.0/issuer-blockcerts.json',
+          chain: {
+            code: 'testnet',
+            blinkCode: 'btc',
+            name: 'Bitcoin Testnet',
+            signatureValue: 'bitcoinTestnet',
+            transactionTemplates: {
+              full: 'https://testnet.blockchain.info/tx/{transaction_id}',
+              raw: 'https://testnet.blockchain.info/rawtx/{transaction_id}'
             }
           },
-          "transactionId": "140ee9382a5c84433b9c89a5d9fea26c47415838b5841deb0c36a8a4b9121f2e",
-          "transactionLink": "https://testnet.blockchain.info/tx/140ee9382a5c84433b9c89a5d9fea26c47415838b5841deb0c36a8a4b9121f2e",
-          "rawTransactionLink": "https://testnet.blockchain.info/rawtx/140ee9382a5c84433b9c89a5d9fea26c47415838b5841deb0c36a8a4b9121f2e"
+          transactionId: '140ee9382a5c84433b9c89a5d9fea26c47415838b5841deb0c36a8a4b9121f2e',
+          transactionLink: 'https://testnet.blockchain.info/tx/140ee9382a5c84433b9c89a5d9fea26c47415838b5841deb0c36a8a4b9121f2e',
+          rawTransactionLink: 'https://testnet.blockchain.info/rawtx/140ee9382a5c84433b9c89a5d9fea26c47415838b5841deb0c36a8a4b9121f2e'
         }
       ]);
     });
 
     it('should expose the document\'s metadata', function () {
       expect(result.metadata).toEqual({
-        classOf: "2022"
+        classOf: '2022'
       });
     });
   });
@@ -97,10 +99,11 @@ describe('Verbose verification middleware test suite', function () {
         json: function (verificationResult) {
           result = verificationResult;
         }
-      }
+      };
 
       const certificate = new Certificate(singleSignatureCert);
       await certificate.init();
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       await verboseVerification(req as any, res as any, certificate);
       expect(result.verificationSteps).toEqual(singleSignatureCertVerifiedStepAssertion);
     });
@@ -120,9 +123,10 @@ describe('Verbose verification middleware test suite', function () {
         json: function (verificationResult) {
           result = verificationResult;
         }
-      }
+      };
       const certificate = new Certificate(multipleSignatureCert);
       await certificate.init();
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       await verboseVerification(req as any, res as any, certificate);
       expect(result.verificationSteps).toEqual(multipleSignatureCertVerifiedStepAssertion);
     });
@@ -142,9 +146,10 @@ describe('Verbose verification middleware test suite', function () {
         json: function (verificationResult) {
           result = verificationResult;
         }
-      }
+      };
       const certificate = new Certificate(failingSignatureCert);
       await certificate.init();
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       await verboseVerification(req as any, res as any, certificate);
       expect(result.verificationSteps).toEqual(failingSignatureCertVerifiedStepAssertion);
     });

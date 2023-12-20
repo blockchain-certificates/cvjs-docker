@@ -16,7 +16,7 @@ describe('verbose verification docker endpoint test suite', function () {
         }),
         method: 'POST',
         headers: { 'Content-Type': 'application/json' }
-      }).then((res) => res.json());
+      }).then(async (res) => await res.json());
     });
 
     afterAll(function () {
@@ -34,6 +34,7 @@ describe('verbose verification docker endpoint test suite', function () {
     it('should expose the message of the verification', function () {
       expect(output.message).toEqual({
         label: 'Verified',
+        // eslint-disable-next-line no-template-curly-in-string
         description: 'This is a valid ${chain} certificate.',
         linkText: 'View transaction link'
       });
@@ -50,32 +51,32 @@ describe('verbose verification docker endpoint test suite', function () {
     it('should expose the signers\' information', function () {
       expect(output.signers).toEqual([
         {
-          "signingDate": "2022-04-05T13:43:10.870521",
-          "signatureSuiteType": "MerkleProof2019",
-          "issuerPublicKey": "mgdWjvq4RYAAP5goUNagTRMx7Xw534S5am",
-          "issuerName": "Blockcerts Organization",
-          "issuerProfileDomain": "www.blockcerts.org",
-          "issuerProfileUrl": "https://www.blockcerts.org/samples/3.0/issuer-blockcerts.json",
-          "chain": {
-            "code": "testnet",
-            "blinkCode": "btc",
-            "name": "Bitcoin Testnet",
-            "signatureValue": "bitcoinTestnet",
-            "transactionTemplates": {
-              "full": "https://testnet.blockchain.info/tx/{transaction_id}",
-              "raw": "https://testnet.blockchain.info/rawtx/{transaction_id}"
+          signingDate: '2022-04-05T13:43:10.870521',
+          signatureSuiteType: 'MerkleProof2019',
+          issuerPublicKey: 'mgdWjvq4RYAAP5goUNagTRMx7Xw534S5am',
+          issuerName: 'Blockcerts Organization',
+          issuerProfileDomain: 'www.blockcerts.org',
+          issuerProfileUrl: 'https://www.blockcerts.org/samples/3.0/issuer-blockcerts.json',
+          chain: {
+            code: 'testnet',
+            blinkCode: 'btc',
+            name: 'Bitcoin Testnet',
+            signatureValue: 'bitcoinTestnet',
+            transactionTemplates: {
+              full: 'https://testnet.blockchain.info/tx/{transaction_id}',
+              raw: 'https://testnet.blockchain.info/rawtx/{transaction_id}'
             }
           },
-          "transactionId": "140ee9382a5c84433b9c89a5d9fea26c47415838b5841deb0c36a8a4b9121f2e",
-          "transactionLink": "https://testnet.blockchain.info/tx/140ee9382a5c84433b9c89a5d9fea26c47415838b5841deb0c36a8a4b9121f2e",
-          "rawTransactionLink": "https://testnet.blockchain.info/rawtx/140ee9382a5c84433b9c89a5d9fea26c47415838b5841deb0c36a8a4b9121f2e"
+          transactionId: '140ee9382a5c84433b9c89a5d9fea26c47415838b5841deb0c36a8a4b9121f2e',
+          transactionLink: 'https://testnet.blockchain.info/tx/140ee9382a5c84433b9c89a5d9fea26c47415838b5841deb0c36a8a4b9121f2e',
+          rawTransactionLink: 'https://testnet.blockchain.info/rawtx/140ee9382a5c84433b9c89a5d9fea26c47415838b5841deb0c36a8a4b9121f2e'
         }
       ]);
     });
 
     it('should expose the document\'s metadata', function () {
       expect(output.metadata).toEqual({
-        classOf: "2022"
+        classOf: '2022'
       });
     });
   });
@@ -89,7 +90,7 @@ describe('verbose verification docker endpoint test suite', function () {
         }),
         method: 'POST',
         headers: { 'Content-Type': 'application/json' }
-      }).then((res) => res.json());
+      }).then(async (res) => await res.json());
     });
 
     afterAll(function () {
@@ -119,32 +120,32 @@ describe('verbose verification docker endpoint test suite', function () {
     it('should expose the signers\' information', function () {
       expect(output.signers).toEqual([
         {
-          "signingDate": "2022-03-08T12:20:39.213837",
-          "signatureSuiteType": "MerkleProof2019",
-          "issuerPublicKey": "mgdWjvq4RYAAP5goUNagTRMx7Xw534S5am",
-          "issuerName": "Blockcerts Organization",
-          "issuerProfileDomain": "www.blockcerts.org",
-          "issuerProfileUrl": "https://www.blockcerts.org/samples/3.0/issuer-blockcerts.json",
-          "chain": {
-            "code": "testnet",
-            "blinkCode": "btc",
-            "name": "Bitcoin Testnet",
-            "signatureValue": "bitcoinTestnet",
-            "transactionTemplates": {
-              "full": "https://testnet.blockchain.info/tx/{transaction_id}",
-              "raw": "https://testnet.blockchain.info/rawtx/{transaction_id}"
+          signingDate: '2022-03-08T12:20:39.213837',
+          signatureSuiteType: 'MerkleProof2019',
+          issuerPublicKey: 'mgdWjvq4RYAAP5goUNagTRMx7Xw534S5am',
+          issuerName: 'Blockcerts Organization',
+          issuerProfileDomain: 'www.blockcerts.org',
+          issuerProfileUrl: 'https://www.blockcerts.org/samples/3.0/issuer-blockcerts.json',
+          chain: {
+            code: 'testnet',
+            blinkCode: 'btc',
+            name: 'Bitcoin Testnet',
+            signatureValue: 'bitcoinTestnet',
+            transactionTemplates: {
+              full: 'https://testnet.blockchain.info/tx/{transaction_id}',
+              raw: 'https://testnet.blockchain.info/rawtx/{transaction_id}'
             }
           },
-          "transactionId": "3315506b4fcc1fd297c3314ff8c406a4eabfd2108ba1563bbad4488ce53775d0",
-          "transactionLink": "https://testnet.blockchain.info/tx/3315506b4fcc1fd297c3314ff8c406a4eabfd2108ba1563bbad4488ce53775d0",
-          "rawTransactionLink": "https://testnet.blockchain.info/rawtx/3315506b4fcc1fd297c3314ff8c406a4eabfd2108ba1563bbad4488ce53775d0"
+          transactionId: '3315506b4fcc1fd297c3314ff8c406a4eabfd2108ba1563bbad4488ce53775d0',
+          transactionLink: 'https://testnet.blockchain.info/tx/3315506b4fcc1fd297c3314ff8c406a4eabfd2108ba1563bbad4488ce53775d0',
+          rawTransactionLink: 'https://testnet.blockchain.info/rawtx/3315506b4fcc1fd297c3314ff8c406a4eabfd2108ba1563bbad4488ce53775d0'
         }
       ]);
     });
 
     it('should expose the document\'s metadata', function () {
       expect(output.metadata).toEqual({
-        classOf: "2022"
+        classOf: '2022'
       });
     });
   });
