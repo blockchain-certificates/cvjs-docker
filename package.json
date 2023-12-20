@@ -4,11 +4,14 @@
   "description": "A docker container for Cert-Verifier-JS node server",
   "main": "index.js",
   "scripts": {
+    "lint": "eslint . --ext .ts",
     "test": "jest",
     "test:watch": "npm run test -- --watch",
     "test:docker": "jest --testRegex \"/*(.test.docker.ts)\"",
-    "build": "docker build . -t cert-verifier-js",
-    "start": "docker run -p 9000:4000 -d cert-verifier-js"
+    "compile": "tsc",
+    "build": "npm run compile && docker build . -t cert-verifier-js && git clean -df",
+    "start": "docker run -p 9000:4000 -d cert-verifier-js",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -38,10 +41,19 @@
     "@types/express": "^4.17.21",
     "@types/jest": "^29.5.11",
     "@types/node": "^20.10.5",
+    "@typescript-eslint/eslint-plugin": "^6.15.0",
+    "eslint": "^8.56.0",
+    "eslint-config-semistandard": "^17.0.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-config-standard-with-typescript": "^43.0.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-n": "^16.5.0",
+    "eslint-plugin-promise": "^6.1.1",
     "jest": "^29.5.0",
     "node-fetch-commonjs": "^3.2.4",
     "ts-jest": "^29.1.1",
     "tslib": "^2.6.2",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "husky": "^8.0.0"
   }
 }

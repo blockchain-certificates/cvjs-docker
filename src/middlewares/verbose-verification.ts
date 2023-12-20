@@ -15,10 +15,10 @@ import type {
   VerificationSubstep,
   BlockcertsV3,
   BlockcertsV2
-} from '@blockcerts/cert-verifier-js'
+} from '@blockcerts/cert-verifier-js';
 import type { Request, Response } from 'express';
 import type { APIResponse } from '../models/APIResponse';
-import type { APIPayload } from  '../models/APIPayload';
+import type { APIPayload } from '../models/APIPayload';
 
 const { VERIFICATION_STATUSES } = certVerifierJs;
 
@@ -37,7 +37,6 @@ function initializeVerificationSteps (certificate: Certificate): IVerificationMa
     status: VERIFICATION_STATUSES.DEFAULT
   }));
 }
-
 
 function stepVerificationIsSuccessful (step: VerificationSubstep): boolean {
   return step.status === VERIFICATION_STATUSES.SUCCESS;
@@ -71,7 +70,7 @@ function oneChildIsFailure (parent: IVerificationMapItem): boolean {
   return suiteVerification || parent.subSteps.some(stepVerificationIsFailure);
 }
 
-function updateParentStepStatus (verificationSteps: IVerificationMapItem[], parentStepCode: string) {
+function updateParentStepStatus (verificationSteps: IVerificationMapItem[], parentStepCode: string): void {
   if (parentStepCode == null) {
     return;
   }
@@ -129,6 +128,7 @@ function getIssuanceDate (certificate: Certificate): string {
 
 function getMetadata (certificate: Certificate): string | null {
   try {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     return JSON.parse(certificate.metadataJson);
   } catch {
     return null;
@@ -141,14 +141,14 @@ function stepVerified (verificationSteps: IVerificationMapItem[], step: Verifica
   const { parentStep } = step;
   const storedParentState = getParentStep(verificationSteps, parentStep);
   updateSubstepIn(storedParentState, step);
-  updateParentStepStatus(verificationSteps, parentStep)
+  updateParentStepStatus(verificationSteps, parentStep);
 
   return verificationSteps;
 }
 
-export default async function verboseVerification (req: Request<{}, {}, APIPayload>, res: Response<VerboseVerificationAPIResponse>, certificate: Certificate): Promise<void> {
-  let verificationSteps = initializeVerificationSteps(certificate);
-  function verificationCb (verifiedStep) {
+export default async function verboseVerification (req: Request<unknown, unknown, APIPayload>, res: Response<VerboseVerificationAPIResponse>, certificate: Certificate): Promise<void> {
+  const verificationSteps = initializeVerificationSteps(certificate);
+  function verificationCb (verifiedStep: VerificationSubstep): void {
     stepVerified(verificationSteps, verifiedStep);
   }
 
