@@ -15,7 +15,7 @@ describe('basic verification docker endpoint test suite', function () {
       }).then((res) => res.json());
 
       expect(output).toEqual({
-        id: 'urn:uuid:13172c8c-efa5-49e1-9f69-a67ba6bd9937',
+        id: 'urn:uuid:bbba8553-8ec1-445f-82c9-a57251dd731c',
         status: 'success',
         message: {
           label: 'Verified',
@@ -38,7 +38,7 @@ describe('basic verification docker endpoint test suite', function () {
       }).then((res) => res.json());
 
       expect(output).toEqual({
-        id: '13172c8c-efa5-49e1-9f69-a67ba6bd9937',
+        id: 'urn:uuid:bbba8553-8ec1-445f-82c9-a57251dd731c',
         status: 'failure',
         message: 'Computed hash does not match remote hash'
       });
