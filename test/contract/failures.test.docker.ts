@@ -18,7 +18,7 @@ describe('failure handling docker endpoint test suite', function () {
     });
 
     it('should return the id of the certificate', function () {
-      expect(output.id).toBe('urn:uuid:13172c8c-efa5-49e1-9f69-a67ba6bd9937');
+      expect(output.id).toBe('urn:uuid:bbba8553-8ec1-445f-82c9-a57251dd731c');
     });
 
     it('should return the verification status', function () {
