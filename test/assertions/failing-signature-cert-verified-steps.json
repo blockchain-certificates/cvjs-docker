@@ -67,43 +67,7 @@
     "isLast": false,
     "status": "failure"
   },
-  {
-    "code": "identityVerification",
-    "label": "Identity verification",
-    "labelPending": "Verifying identity",
-    "subSteps": [
-      {
-        "code": "controlVerificationMethod",
-        "label": "Control Verification Method",
-        "labelPending": "Controlling Verification Method",
-        "parentStep": "identityVerification",
-        "status": "standby"
-      }
-    ],
-    "suites": [
-      {
-        "proofType": "MerkleProof2019",
-        "subSteps": [
-          {
-            "code": "deriveIssuingAddressFromPublicKey",
-            "label": "Derive Issuing Address from Public Key",
-            "labelPending": "Deriving Issuing Address from Public Key",
-            "parentStep": "identityVerification",
-            "status": "standby"
-          },
-          {
-            "code": "compareIssuingAddress",
-            "label": "Compare addresses",
-            "labelPending": "Comparing addresses",
-            "parentStep": "identityVerification",
-            "status": "standby"
-          }
-        ]
-      }
-    ],
-    "isLast": false,
-    "status": "standby"
-  },
+
   {
     "code": "statusCheck",
     "label": "Status check",

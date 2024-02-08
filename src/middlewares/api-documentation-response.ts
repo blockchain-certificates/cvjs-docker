@@ -39,7 +39,7 @@ export default function apiDocumentationResponse (req: Request, res: Response<st
     
     - example response payload:
      {
-        "id": "urn:uuid:13172c8c-efa5-49e1-9f69-a67ba6bd9937",
+        "id": "urn:uuid:bbba8553-8ec1-445f-82c9-a57251dd731c",
         "status": "success",
         "message": {
           "label": "Verified",
@@ -166,7 +166,7 @@ export default function apiDocumentationResponse (req: Request, res: Response<st
             "status": "success"
           }
         ],
-        "issuanceDate": "2022-02-02T15:00:00Z",
+        "issuanceDate": "2022-08-18T14:04:24Z",
         "signers": [
           {
             "signingDate": "2022-04-05T13:43:10.870521",

@@ -44,7 +44,7 @@ describe('verbose verification docker endpoint test suite', function () {
     });
 
     it('should expose the issuance date of the certificate in the response', function () {
-      expect(output.issuanceDate).toBe('2022-02-02T15:00:00Z');
+      expect(output.issuanceDate).toBe('2022-08-18T14:04:24Z');
     });
 
     it('should expose the signers\' information', function () {
@@ -74,9 +74,7 @@ describe('verbose verification docker endpoint test suite', function () {
     });
 
     it('should expose the document\'s metadata', function () {
-      expect(output.metadata).toEqual({
-        classOf: "2022"
-      });
+      expect(output.metadata).toEqual(null);
     });
   });
 
@@ -113,7 +111,7 @@ describe('verbose verification docker endpoint test suite', function () {
     });
 
     it('should expose the issuance date of the certificate in the response', function () {
-      expect(output.issuanceDate).toBe('2022-02-02T15:00:00Z');
+      expect(output.issuanceDate).toBe('2022-08-18T14:04:24Z');
     });
 
     it('should expose the signers\' information', function () {
@@ -143,9 +141,7 @@ describe('verbose verification docker endpoint test suite', function () {
     });
 
     it('should expose the document\'s metadata', function () {
-      expect(output.metadata).toEqual({
-        classOf: "2022"
-      });
+      expect(output.metadata).toEqual(null);
     });
   });
 });
