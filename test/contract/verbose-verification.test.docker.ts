@@ -24,7 +24,7 @@ describe('verbose verification docker endpoint test suite', function () {
     });
 
     it('should expose the id of the certificate', function () {
-      expect(output.id).toBe('urn:uuid:13172c8c-efa5-49e1-9f69-a67ba6bd9937');
+      expect(output.id).toBe('urn:uuid:bbba8553-8ec1-445f-82c9-a57251dd731c');
     });
 
     it('should expose the status of the verification', function () {
@@ -44,13 +44,13 @@ describe('verbose verification docker endpoint test suite', function () {
     });
 
     it('should expose the issuance date of the certificate in the response', function () {
-      expect(output.issuanceDate).toBe('2022-02-02T15:00:00Z');
+      expect(output.issuanceDate).toBe('2022-08-18T14:04:24Z');
     });
 
     it('should expose the signers\' information', function () {
       expect(output.signers).toEqual([
         {
-          "signingDate": "2022-04-05T13:43:10.870521",
+          "signingDate": "2023-03-30T15:08:26.139158",
           "signatureSuiteType": "MerkleProof2019",
           "issuerPublicKey": "mgdWjvq4RYAAP5goUNagTRMx7Xw534S5am",
           "issuerName": "Blockcerts Organization",
@@ -66,17 +66,15 @@ describe('verbose verification docker endpoint test suite', function () {
               "raw": "https://testnet.blockchain.info/rawtx/{transaction_id}"
             }
           },
-          "transactionId": "140ee9382a5c84433b9c89a5d9fea26c47415838b5841deb0c36a8a4b9121f2e",
-          "transactionLink": "https://testnet.blockchain.info/tx/140ee9382a5c84433b9c89a5d9fea26c47415838b5841deb0c36a8a4b9121f2e",
-          "rawTransactionLink": "https://testnet.blockchain.info/rawtx/140ee9382a5c84433b9c89a5d9fea26c47415838b5841deb0c36a8a4b9121f2e"
+          "transactionId": "188bd8713c62c0f1f1f8abf48291c33b5503dcd5b9e0ab18c0f969bb790b571a",
+          "transactionLink": "https://testnet.blockchain.info/tx/188bd8713c62c0f1f1f8abf48291c33b5503dcd5b9e0ab18c0f969bb790b571a",
+          "rawTransactionLink": "https://testnet.blockchain.info/rawtx/188bd8713c62c0f1f1f8abf48291c33b5503dcd5b9e0ab18c0f969bb790b571a"
         }
       ]);
     });
 
     it('should expose the document\'s metadata', function () {
-      expect(output.metadata).toEqual({
-        classOf: "2022"
-      });
+      expect(output.metadata).toEqual(null);
     });
   });
 
@@ -97,7 +95,7 @@ describe('verbose verification docker endpoint test suite', function () {
     });
 
     it('should expose the id of the certificate', function () {
-      expect(output.id).toBe('13172c8c-efa5-49e1-9f69-a67ba6bd9937');
+      expect(output.id).toBe('urn:uuid:bbba8553-8ec1-445f-82c9-a57251dd731c');
     });
 
     it('should expose the status of the verification', function () {
@@ -113,13 +111,13 @@ describe('verbose verification docker endpoint test suite', function () {
     });
 
     it('should expose the issuance date of the certificate in the response', function () {
-      expect(output.issuanceDate).toBe('2022-02-02T15:00:00Z');
+      expect(output.issuanceDate).toBe('2022-08-18T14:04:24Z');
     });
 
     it('should expose the signers\' information', function () {
       expect(output.signers).toEqual([
         {
-          "signingDate": "2022-03-08T12:20:39.213837",
+          "signingDate": "2023-03-30T15:08:26.139158",
           "signatureSuiteType": "MerkleProof2019",
           "issuerPublicKey": "mgdWjvq4RYAAP5goUNagTRMx7Xw534S5am",
           "issuerName": "Blockcerts Organization",
@@ -135,17 +133,15 @@ describe('verbose verification docker endpoint test suite', function () {
               "raw": "https://testnet.blockchain.info/rawtx/{transaction_id}"
             }
           },
-          "transactionId": "3315506b4fcc1fd297c3314ff8c406a4eabfd2108ba1563bbad4488ce53775d0",
-          "transactionLink": "https://testnet.blockchain.info/tx/3315506b4fcc1fd297c3314ff8c406a4eabfd2108ba1563bbad4488ce53775d0",
-          "rawTransactionLink": "https://testnet.blockchain.info/rawtx/3315506b4fcc1fd297c3314ff8c406a4eabfd2108ba1563bbad4488ce53775d0"
+          "transactionId": "188bd8713c62c0f1f1f8abf48291c33b5503dcd5b9e0ab18c0f969bb790b571a",
+          "transactionLink": "https://testnet.blockchain.info/tx/188bd8713c62c0f1f1f8abf48291c33b5503dcd5b9e0ab18c0f969bb790b571a",
+          "rawTransactionLink": "https://testnet.blockchain.info/rawtx/188bd8713c62c0f1f1f8abf48291c33b5503dcd5b9e0ab18c0f969bb790b571a"
         }
       ]);
     });
 
     it('should expose the document\'s metadata', function () {
-      expect(output.metadata).toEqual({
-        classOf: "2022"
-      });
+      expect(output.metadata).toEqual(null);
     });
   });
 });

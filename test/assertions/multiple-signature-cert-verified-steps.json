@@ -6,7 +6,7 @@
     "subSteps": [],
     "suites": [
       {
-        "proofType": "Ed25519Signature2020",
+        "proofType": "EcdsaSecp256k1Signature2019",
         "subSteps": [
           {
             "code": "retrieveVerificationMethodPublicKey",
@@ -26,22 +26,10 @@
         "proofType": "MerkleProof2019",
         "subSteps": [
           {
-            "code": "getTransactionId",
-            "status": "success",
-            "parentStep": "proofVerification",
-            "label": "Getting transaction ID"
-          },
-          {
             "code": "computeLocalHash",
             "status": "success",
             "parentStep": "proofVerification",
             "label": "Computing local hash"
-          },
-          {
-            "code": "fetchRemoteHash",
-            "status": "success",
-            "parentStep": "proofVerification",
-            "label": "Fetching remote hash"
           },
           {
             "code": "compareHashes",
@@ -50,28 +38,10 @@
             "label": "Comparing hashes"
           },
           {
-            "code": "checkMerkleRoot",
-            "status": "success",
-            "parentStep": "proofVerification",
-            "label": "Checking Merkle Root"
-          },
-          {
             "code": "checkReceipt",
             "status": "success",
             "parentStep": "proofVerification",
             "label": "Checking Receipt"
-          },
-          {
-            "code": "parseIssuerKeys",
-            "status": "success",
-            "parentStep": "proofVerification",
-            "label": "Parsing issuer keys"
-          },
-          {
-            "code": "checkAuthenticity",
-            "status": "success",
-            "parentStep": "proofVerification",
-            "label": "Checking Authenticity"
           }
         ]
       }
@@ -93,25 +63,12 @@
     ],
     "suites": [
       {
-        "proofType": "Ed25519Signature2020",
+        "proofType": "EcdsaSecp256k1Signature2019",
         "subSteps": []
       },
       {
         "proofType": "MerkleProof2019",
-        "subSteps": [
-          {
-            "code": "deriveIssuingAddressFromPublicKey",
-            "status": "success",
-            "parentStep": "identityVerification",
-            "label": "Deriving Issuing Address from Public Key"
-          },
-          {
-            "code": "compareIssuingAddress",
-            "status": "success",
-            "parentStep": "identityVerification",
-            "label": "Comparing addresses"
-          }
-        ]
+        "subSteps": []
       }
     ],
     "isLast": false,
