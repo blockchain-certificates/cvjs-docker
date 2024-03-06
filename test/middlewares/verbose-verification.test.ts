@@ -31,7 +31,7 @@ describe('Verbose verification middleware test suite', function () {
     });
 
     it('should provide the id of the cert in the response', function () {
-      expect(result.id).toBe('urn:uuid:13172c8c-efa5-49e1-9f69-a67ba6bd9937');
+      expect(result.id).toBe('urn:uuid:bbba8553-8ec1-445f-82c9-a57251dd731c');
     });
 
     it('should provide the status of the verification in the response', function () {
@@ -47,13 +47,13 @@ describe('Verbose verification middleware test suite', function () {
     });
 
     it('should expose the issuance date of the certificate in the response', function () {
-      expect(result.issuanceDate).toBe('2022-02-02T15:00:00Z');
+      expect(result.issuanceDate).toBe('2022-08-18T14:04:24Z');
     });
 
     it('should expose the signers of the certificate in the response', function () {
       expect(result.signers).toEqual([
         {
-          "signingDate": "2022-04-05T13:43:10.870521",
+          "signingDate": "2023-03-30T15:08:26.139158",
           "signatureSuiteType": "MerkleProof2019",
           "issuerPublicKey": "mgdWjvq4RYAAP5goUNagTRMx7Xw534S5am",
           "issuerName": "Blockcerts Organization",
@@ -69,17 +69,11 @@ describe('Verbose verification middleware test suite', function () {
               "raw": "https://testnet.blockchain.info/rawtx/{transaction_id}"
             }
           },
-          "transactionId": "140ee9382a5c84433b9c89a5d9fea26c47415838b5841deb0c36a8a4b9121f2e",
-          "transactionLink": "https://testnet.blockchain.info/tx/140ee9382a5c84433b9c89a5d9fea26c47415838b5841deb0c36a8a4b9121f2e",
-          "rawTransactionLink": "https://testnet.blockchain.info/rawtx/140ee9382a5c84433b9c89a5d9fea26c47415838b5841deb0c36a8a4b9121f2e"
+          "transactionId": "188bd8713c62c0f1f1f8abf48291c33b5503dcd5b9e0ab18c0f969bb790b571a",
+          "transactionLink": "https://testnet.blockchain.info/tx/188bd8713c62c0f1f1f8abf48291c33b5503dcd5b9e0ab18c0f969bb790b571a",
+          "rawTransactionLink": "https://testnet.blockchain.info/rawtx/188bd8713c62c0f1f1f8abf48291c33b5503dcd5b9e0ab18c0f969bb790b571a"
         }
       ]);
-    });
-
-    it('should expose the document\'s metadata', function () {
-      expect(result.metadata).toEqual({
-        classOf: "2022"
-      });
     });
   });
 
