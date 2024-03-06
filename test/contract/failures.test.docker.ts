@@ -7,7 +7,7 @@ describe('failure handling docker endpoint test suite', function () {
 
     beforeAll(async function () {
       const fixture = JSON.parse(JSON.stringify(singleSignatureCert));
-      fixture.issuer.id = 'https://this.url.leads.to.nowhere';
+      fixture.issuer = 'https://this.url.leads.to.nowhere';
       output = await fetch('http://localhost:9000/verification', {
         body: JSON.stringify({
           certificate: fixture

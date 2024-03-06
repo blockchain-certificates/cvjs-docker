@@ -75,6 +75,10 @@ describe('Verbose verification middleware test suite', function () {
         }
       ]);
     });
+
+    it('should expose the document\'s metadata', function () {
+      expect(result.metadata).toEqual(null);
+    });
   });
 
   describe('given it is called with a single signature cert', function () {
