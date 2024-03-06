@@ -67,7 +67,6 @@
     "isLast": false,
     "status": "failure"
   },
-
   {
     "code": "statusCheck",
     "label": "Status check",
