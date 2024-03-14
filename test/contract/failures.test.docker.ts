@@ -29,4 +29,148 @@ describe('failure handling docker endpoint test suite', function () {
       expect(output.message).toBe('Unable to get issuer profile');
     });
   });
+
+  describe('when the payload is invalid', function () {
+    describe('an empty string', function () {
+      it('should return a 400 bad request response', async function () {
+        const output = await fetch('http://localhost:9000/verification', {
+          body: JSON.stringify({
+            certificate: ''
+          }),
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' }
+        }).then((res) => {
+          return res.status;
+        });
+
+        expect(output).toBe(400);
+      });
+    });
+
+    describe('a string', function () {
+      it('should return a 400 bad request response', async function () {
+        const output = await fetch('http://localhost:9000/verification', {
+          body: JSON.stringify({
+            certificate: 'certificate'
+          }),
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' }
+        }).then((res) => {
+          return res.status;
+        });
+
+        expect(output).toBe(400);
+      });
+    });
+
+    describe('a boolean', function () {
+      it('should return a 400 bad request response', async function () {
+        const output = await fetch('http://localhost:9000/verification', {
+          body: JSON.stringify({
+            certificate: true
+          }),
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' }
+        }).then((res) => {
+          return res.status;
+        });
+
+        expect(output).toBe(400);
+      });
+    });
+
+    describe('a number', function () {
+      it('should return a 400 bad request response', async function () {
+        const output = await fetch('http://localhost:9000/verification', {
+          body: JSON.stringify({
+            certificate: 42
+          }),
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' }
+        }).then((res) => {
+          return res.status;
+        });
+
+        expect(output).toBe(400);
+      });
+    });
+
+    describe('an array', function () {
+      it('should return a 400 bad request response', async function () {
+        const output = await fetch('http://localhost:9000/verification', {
+          body: JSON.stringify({
+            certificate: ['certificate']
+          }),
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' }
+        }).then((res) => {
+          return res.status;
+        });
+
+        expect(output).toBe(400);
+      });
+    });
+
+    describe('an empty array', function () {
+      it('should return a 400 bad request response', async function () {
+        const output = await fetch('http://localhost:9000/verification', {
+          body: JSON.stringify({
+            certificate: []
+          }),
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' }
+        }).then((res) => {
+          return res.status;
+        });
+
+        expect(output).toBe(400);
+      });
+    });
+
+    describe('undefined', function () {
+      it('should return a 400 bad request response', async function () {
+        const output = await fetch('http://localhost:9000/verification', {
+          body: JSON.stringify({}),
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' }
+        }).then((res) => {
+          return res.status;
+        });
+
+        expect(output).toBe(400);
+      });
+    });
+
+    describe('null', function () {
+      it('should return a 400 bad request response', async function () {
+        const output = await fetch('http://localhost:9000/verification', {
+          body: JSON.stringify({
+            certificate: null
+          }),
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' }
+        }).then((res) => {
+          return res.status;
+        });
+
+        expect(output).toBe(400);
+      });
+    });
+
+    describe('an empty object', function () {
+      it('should return a 400 bad request response', async function () {
+        const output = await fetch('http://localhost:9000/verification', {
+          body: JSON.stringify({
+            certificate: {}
+          }),
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' }
+        }).then((res) => {
+          return res.status;
+        });
+
+        expect(output).toBe(400);
+      });
+    });
+  });
 });
