@@ -20,7 +20,6 @@ server.get('/', (req, res) => {
 server.post('/verification', async (req: Request<{}, {}, APIPayload>, res: Response<APIResponse>): Promise<void> => {
   console.log('calling basic verification endpoint');
   const certificate = await initCertVerifierJs(req);
-  console.log('certificate received:', certificate);
   if (certificate == null) {
     console.log('got an invalid certificate definition: ', certificate, typeof certificate);
     res.sendStatus(400);
@@ -42,6 +41,8 @@ server.post('/verification/verbose', async (req: Request<{}, {}, APIPayload>, re
   console.log('calling verbose verification endpoint');
   const certificate = await initCertVerifierJs(req);
   if (certificate == null) {
+    console.log('got an invalid certificate definition: ', certificate, typeof certificate);
+    res.sendStatus(400);
     return;
   }
 
