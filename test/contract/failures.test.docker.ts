@@ -142,6 +142,20 @@ describe('failure handling docker endpoint test suite', function () {
         });
       });
 
+      describe('body as an empty array', function () {
+        it('should return a 400 bad request response', async function () {
+          const output = await fetch('http://localhost:9000/verification', {
+            body: JSON.stringify([]),
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+          }).then((res) => {
+            return res.status;
+          });
+
+          expect(output).toBe(400);
+        });
+      });
+
       describe('null', function () {
         it('should return a 400 bad request response', async function () {
           const output = await fetch('http://localhost:9000/verification', {
@@ -278,6 +292,20 @@ describe('failure handling docker endpoint test suite', function () {
         it('should return a 400 bad request response', async function () {
           const output = await fetch('http://localhost:9000/verification/verbose', {
             body: JSON.stringify({}),
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' }
+          }).then((res) => {
+            return res.status;
+          });
+
+          expect(output).toBe(400);
+        });
+      });
+
+      describe('body as an empty array', function () {
+        it('should return a 400 bad request response', async function () {
+          const output = await fetch('http://localhost:9000/verification/verbose', {
+            body: JSON.stringify([]),
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
           }).then((res) => {
