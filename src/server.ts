@@ -4,11 +4,11 @@ import verboseVerification, { type VerboseVerificationAPIResponse } from './midd
 import basicVerification from './middlewares/basic-verification';
 import apiDocumentationResponse from './middlewares/api-documentation-response';
 import initCertVerifierJs, { type CertificateInitError, type CertificateInitSuccess } from './helpers/init-cert-verifier-js';
-import type { Certificate } from '@blockcerts/cert-verifier-js';
 import type { APIResponse } from './models/APIResponse';
 import type { APIPayload } from  './models/APIPayload';
 import type { ProblemDetails } from './helpers/invalid-certificate-problem-details-generator';
-import handleCertificateProblemDetails from "./middlewares/handle-certificate-problem-details";
+import handleCertificateProblemDetails from './middlewares/handle-certificate-problem-details';
+import handleCertificateError from './middlewares/handle-certificate-error';
 
 const server = express();
 server.use(bodyParser.json({ limit: '5mb' }));
@@ -28,11 +28,7 @@ server.post('/verification', async (req: Request<{}, {}, APIPayload>, res: Respo
   }
 
   if ((initializationResult as CertificateInitError).hasError) {
-    res.json({
-      id: req.body.certificate.id,
-      status: (initializationResult as CertificateInitError).status,
-      message: (initializationResult as CertificateInitError).message
-    });
+    handleCertificateError(req, res, initializationResult as CertificateInitError);
     return;
   }
 
@@ -47,11 +43,7 @@ server.post('/verification/verbose', async (req: Request<{}, {}, APIPayload>, re
   }
 
   if ((initializationResult as CertificateInitError).hasError) {
-    res.json({
-      id: req.body.certificate.id,
-      status: (initializationResult as CertificateInitError).status,
-      message: (initializationResult as CertificateInitError).message
-    });
+    handleCertificateError(req, res, initializationResult as CertificateInitError);
     return;
   }
 

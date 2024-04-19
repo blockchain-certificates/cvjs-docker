@@ -1,7 +1,7 @@
 import { ProblemDetails } from '../helpers/invalid-certificate-problem-details-generator';
 
 export default function handleCertificateProblemDetails (req, res, problemDetails: ProblemDetails) {
-  console.error('An error occured receiving the certificate definition');
+  console.error('An error occured receiving the certificate definition', problemDetails);
   res
     .status(problemDetails.statusCode)
     .header('Content-Type','application/problem+json')
