@@ -3,10 +3,12 @@ import bodyParser from 'body-parser';
 import verboseVerification, { type VerboseVerificationAPIResponse } from './middlewares/verbose-verification';
 import basicVerification from './middlewares/basic-verification';
 import apiDocumentationResponse from './middlewares/api-documentation-response';
-import initCertVerifierJs, { type CertificateInitError } from './helpers/init-cert-verifier-js';
+import initCertVerifierJs, { type CertificateInitError, type CertificateInitSuccess } from './helpers/init-cert-verifier-js';
 import type { Certificate } from '@blockcerts/cert-verifier-js';
 import type { APIResponse } from './models/APIResponse';
 import type { APIPayload } from  './models/APIPayload';
+import type { ProblemDetails } from './helpers/invalid-certificate-problem-details-generator';
+import handleCertificateProblemDetails from "./middlewares/handle-certificate-problem-details";
 
 const server = express();
 server.use(bodyParser.json({ limit: '5mb' }));
@@ -19,43 +21,41 @@ server.get('/', (req, res) => {
 
 server.post('/verification', async (req: Request<{}, {}, APIPayload>, res: Response<APIResponse>): Promise<void> => {
   console.log('calling basic verification endpoint');
-  const certificate = await initCertVerifierJs(req);
-  if (certificate == null) {
-    console.log('got an invalid certificate definition: ', certificate, typeof certificate);
-    res.sendStatus(400);
+  const initializationResult = await initCertVerifierJs(req);
+  if ((initializationResult as ProblemDetails).statusCode !== 200) {
+    handleCertificateProblemDetails(req, res, initializationResult as ProblemDetails);
     return;
   }
 
-  if ((certificate as CertificateInitError).hasError) {
+  if ((initializationResult as CertificateInitError).hasError) {
     res.json({
       id: req.body.certificate.id,
-      status: (certificate as CertificateInitError).status,
-      message: (certificate as CertificateInitError).message
+      status: (initializationResult as CertificateInitError).status,
+      message: (initializationResult as CertificateInitError).message
     });
     return;
   }
 
-  await basicVerification(req, res, certificate as Certificate);
+  await basicVerification(req, res, (initializationResult as CertificateInitSuccess).certificate);
 });
 server.post('/verification/verbose', async (req: Request<{}, {}, APIPayload>, res: Response<VerboseVerificationAPIResponse | APIResponse>): Promise<void> => {
   console.log('calling verbose verification endpoint');
-  const certificate = await initCertVerifierJs(req);
-  if (certificate == null) {
-    console.log('got an invalid certificate definition: ', certificate, typeof certificate);
-    res.sendStatus(400);
+  const initializationResult = await initCertVerifierJs(req);
+  if ((initializationResult as ProblemDetails).statusCode !== 200) {
+    handleCertificateProblemDetails(req, res, initializationResult as ProblemDetails);
     return;
   }
 
-  if ((certificate as CertificateInitError).hasError) {
+  if ((initializationResult as CertificateInitError).hasError) {
     res.json({
       id: req.body.certificate.id,
-      status: (certificate as CertificateInitError).status,
-      message: (certificate as CertificateInitError).message
+      status: (initializationResult as CertificateInitError).status,
+      message: (initializationResult as CertificateInitError).message
     });
     return;
   }
 
-  await verboseVerification(req, res, certificate as Certificate);
+  await verboseVerification(req, res, (initializationResult as CertificateInitSuccess).certificate);
 });
 
 server.listen(port, () => {
