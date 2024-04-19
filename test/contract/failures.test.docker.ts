@@ -1,5 +1,6 @@
 import fetch from 'node-fetch-commonjs';
 import singleSignatureCert from '../fixtures/single-signature-cert.json';
+import { ProblemDetails } from '../../src/helpers/invalid-certificate-problem-details-generator';
 
 describe('failure handling docker endpoint test suite', function () {
   describe('when there is a failure getting the issuer profile', function () {
@@ -33,158 +34,320 @@ describe('failure handling docker endpoint test suite', function () {
   describe('/verification endpoint', function () {
     describe('when the payload is invalid', function () {
       describe('an empty string', function () {
-        it('should return a 400 bad request response', async function () {
-          const output = await fetch('http://localhost:9000/verification', {
+        let output;
+
+        beforeAll(async function () {
+          output = await fetch('http://localhost:9000/verification', {
             body: JSON.stringify({
               certificate: ''
             }),
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
-          }).then((res) => {
-            return res.status;
+          }).then(async (res) => {
+            const message = await res.json();
+            return {
+              status: res.status,
+              message
+            };
           });
+        });
 
-          expect(output).toBe(400);
+        it('should return a 400 bad request response', function () {
+          expect(output.status).toBe(400);
+        });
+
+        it('should set the correct problem details title', function () {
+          expect((output.message as ProblemDetails).title).toBe('Invalid certificate definition');
+        });
+
+        it('should set the correct problem details detail', function () {
+          expect((output.message as ProblemDetails).detail).toBe('No certificate definition provided.');
         });
       });
 
       describe('a string', function () {
-        it('should return a 400 bad request response', async function () {
-          const output = await fetch('http://localhost:9000/verification', {
+        let output;
+
+        beforeAll(async function () {
+          output = await fetch('http://localhost:9000/verification', {
             body: JSON.stringify({
               certificate: 'certificate'
             }),
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
-          }).then((res) => {
-            return res.status;
+          }).then(async (res) => {
+            const message = await res.json();
+            return {
+              status: res.status,
+              message
+            };
           });
+        });
 
-          expect(output).toBe(400);
+        it('should return a 400 bad request response', async function () {
+          expect(output.status).toBe(400);
+        });
+
+        it('should set the correct problem details title', function () {
+          expect((output.message as ProblemDetails).title).toBe('Invalid certificate definition');
+        });
+
+        it('should set the correct problem details detail', function () {
+          expect((output.message as ProblemDetails).detail).toBe('Certificate definition must be an object.');
         });
       });
 
       describe('a boolean', function () {
-        it('should return a 400 bad request response', async function () {
-          const output = await fetch('http://localhost:9000/verification', {
+        let output;
+
+        beforeAll(async function () {
+          output = await fetch('http://localhost:9000/verification', {
             body: JSON.stringify({
               certificate: true
             }),
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
-          }).then((res) => {
-            return res.status;
+          }).then(async (res) => {
+            const message = await res.json();
+            return {
+              status: res.status,
+              message
+            };
           });
+        });
 
-          expect(output).toBe(400);
+        it('should return a 400 bad request response', async function () {
+          expect(output.status).toBe(400);
+        });
+
+        it('should set the correct problem details title', function () {
+          expect((output.message as ProblemDetails).title).toBe('Invalid certificate definition');
+        });
+
+        it('should set the correct problem details detail', function () {
+          expect((output.message as ProblemDetails).detail).toBe('Certificate definition must be an object.');
         });
       });
 
       describe('a number', function () {
-        it('should return a 400 bad request response', async function () {
-          const output = await fetch('http://localhost:9000/verification', {
+        let output;
+
+        beforeAll(async function () {
+          output = await fetch('http://localhost:9000/verification', {
             body: JSON.stringify({
               certificate: 42
             }),
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
-          }).then((res) => {
-            return res.status;
+          }).then(async (res) => {
+            const message = await res.json();
+            return {
+              status: res.status,
+              message
+            };
           });
+        });
 
-          expect(output).toBe(400);
+        it('should return a 400 bad request response', async function () {
+          expect(output.status).toBe(400);
+        });
+
+        it('should set the correct problem details title', function () {
+          expect((output.message as ProblemDetails).title).toBe('Invalid certificate definition');
+        });
+
+        it('should set the correct problem details detail', function () {
+          expect((output.message as ProblemDetails).detail).toBe('Certificate definition must be an object.');
         });
       });
 
       describe('an array', function () {
-        it('should return a 400 bad request response', async function () {
-          const output = await fetch('http://localhost:9000/verification', {
+        let output;
+
+        beforeAll(async function () {
+          output = await fetch('http://localhost:9000/verification', {
             body: JSON.stringify({
               certificate: ['certificate']
             }),
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
-          }).then((res) => {
-            return res.status;
+          }).then(async (res) => {
+            const message = await res.json();
+            return {
+              status: res.status,
+              message
+            };
           });
+        });
 
-          expect(output).toBe(400);
+        it('should return a 400 bad request response', async function () {
+          expect(output.status).toBe(400);
+        });
+
+        it('should set the correct problem details title', function () {
+          expect((output.message as ProblemDetails).title).toBe('Invalid certificate definition');
+        });
+
+        it('should set the correct problem details detail', function () {
+          expect((output.message as ProblemDetails).detail).toBe('Certificate definition must be an object, not an array.');
         });
       });
 
       describe('an empty array', function () {
-        it('should return a 400 bad request response', async function () {
-          const output = await fetch('http://localhost:9000/verification', {
+        let output;
+
+        beforeAll(async function () {
+          output = await fetch('http://localhost:9000/verification', {
             body: JSON.stringify({
               certificate: []
             }),
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
-          }).then((res) => {
-            return res.status;
+          }).then(async (res) => {
+            const message = await res.json();
+            return {
+              status: res.status,
+              message
+            };
           });
+        });
 
-          expect(output).toBe(400);
+        it('should return a 400 bad request response', async function () {
+          expect(output.status).toBe(400);
+        });
+
+        it('should set the correct problem details title', function () {
+          expect((output.message as ProblemDetails).title).toBe('Invalid certificate definition');
+        });
+
+        it('should set the correct problem details detail', function () {
+          expect((output.message as ProblemDetails).detail).toBe('Certificate definition must be an object, not an array.');
         });
       });
 
       describe('undefined', function () {
-        it('should return a 400 bad request response', async function () {
-          const output = await fetch('http://localhost:9000/verification', {
-            body: JSON.stringify({}),
+        let output;
+
+        beforeAll(async function () {
+          output = await fetch('http://localhost:9000/verification', {
+            body: JSON.stringify({
+              certificate: undefined
+            }),
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
-          }).then((res) => {
-            return res.status;
+          }).then(async (res) => {
+            const message = await res.json();
+            return {
+              status: res.status,
+              message
+            };
           });
+        });
 
-          expect(output).toBe(400);
+        it('should return a 400 bad request response', function () {
+          expect(output.status).toBe(400);
+        });
+
+        it('should set the correct problem details title', function () {
+          expect((output.message as ProblemDetails).title).toBe('Invalid certificate definition');
+        });
+
+        it('should set the correct problem details detail', function () {
+          expect((output.message as ProblemDetails).detail).toBe('No certificate definition provided.');
         });
       });
 
       describe('body as an empty array', function () {
-        it('should return a 400 bad request response', async function () {
-          const output = await fetch('http://localhost:9000/verification', {
+        let output;
+
+        beforeAll(async function () {
+          output = await fetch('http://localhost:9000/verification', {
             body: JSON.stringify([]),
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
-          }).then((res) => {
-            return res.status;
+          }).then(async (res) => {
+            const message = await res.json();
+            return {
+              status: res.status,
+              message
+            };
           });
+        });
 
-          expect(output).toBe(400);
+        it('should return a 400 bad request response', function () {
+          expect(output.status).toBe(400);
+        });
+
+        it('should set the correct problem details title', function () {
+          expect((output.message as ProblemDetails).title).toBe('Invalid certificate definition');
+        });
+
+        it('should set the correct problem details detail', function () {
+          expect((output.message as ProblemDetails).detail).toBe('No certificate definition provided.');
         });
       });
 
       describe('null', function () {
-        it('should return a 400 bad request response', async function () {
-          const output = await fetch('http://localhost:9000/verification', {
+        let output;
+
+        beforeAll(async function () {
+          output = await fetch('http://localhost:9000/verification', {
             body: JSON.stringify({
               certificate: null
             }),
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
-          }).then((res) => {
-            return res.status;
+          }).then(async (res) => {
+            const message = await res.json();
+            return {
+              status: res.status,
+              message
+            };
           });
+        });
 
-          expect(output).toBe(400);
+        it('should return a 400 bad request response', function () {
+          expect(output.status).toBe(400);
+        });
+
+        it('should set the correct problem details title', function () {
+          expect((output.message as ProblemDetails).title).toBe('Invalid certificate definition');
+        });
+
+        it('should set the correct problem details detail', function () {
+          expect((output.message as ProblemDetails).detail).toBe('No certificate definition provided.');
         });
       });
 
       describe('an empty object', function () {
-        it('should return a 400 bad request response', async function () {
-          const output = await fetch('http://localhost:9000/verification', {
+        let output;
+
+        beforeAll(async function () {
+          output = await fetch('http://localhost:9000/verification', {
             body: JSON.stringify({
               certificate: {}
             }),
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
-          }).then((res) => {
-            return res.status;
+          }).then(async (res) => {
+            const message = await res.json();
+            return {
+              status: res.status,
+              message
+            };
           });
+        });
 
-          expect(output).toBe(400);
+        it('should return a 400 bad request response', function () {
+          expect(output.status).toBe(400);
+        });
+
+        it('should set the correct problem details title', function () {
+          expect((output.message as ProblemDetails).title).toBe('Invalid certificate definition');
+        });
+
+        it('should set the correct problem details detail', function () {
+          expect((output.message as ProblemDetails).detail).toBe('Certificate definition must not be an empty object.');
         });
       });
     });
@@ -193,158 +356,318 @@ describe('failure handling docker endpoint test suite', function () {
   describe('/verification/verbose endpoint', function () {
     describe('when the payload is invalid', function () {
       describe('an empty string', function () {
-        it('should return a 400 bad request response', async function () {
-          const output = await fetch('http://localhost:9000/verification/verbose', {
+        let output;
+
+        beforeAll(async function () {
+          output = await fetch('http://localhost:9000/verification/verbose', {
             body: JSON.stringify({
               certificate: ''
             }),
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
-          }).then((res) => {
-            return res.status;
+          }).then(async (res) => {
+            const message = await res.json();
+            return {
+              status: res.status,
+              message
+            };
           });
+        });
 
-          expect(output).toBe(400);
+        it('should return a 400 bad request response', function () {
+          expect(output.status).toBe(400);
+        });
+
+        it('should set the correct problem details title', function () {
+          expect((output.message as ProblemDetails).title).toBe('Invalid certificate definition');
+        });
+
+        it('should set the correct problem details detail', function () {
+          expect((output.message as ProblemDetails).detail).toBe('No certificate definition provided.');
         });
       });
 
       describe('a string', function () {
-        it('should return a 400 bad request response', async function () {
-          const output = await fetch('http://localhost:9000/verification/verbose', {
+        let output;
+
+        beforeAll(async function () {
+          output = await fetch('http://localhost:9000/verification/verbose', {
             body: JSON.stringify({
               certificate: 'certificate'
             }),
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
-          }).then((res) => {
-            return res.status;
+          }).then(async (res) => {
+            const message = await res.json();
+            return {
+              status: res.status,
+              message
+            };
           });
+        });
 
-          expect(output).toBe(400);
+        it('should return a 400 bad request response', function () {
+          expect(output.status).toBe(400);
+        });
+
+        it('should set the correct problem details title', function () {
+          expect((output.message as ProblemDetails).title).toBe('Invalid certificate definition');
+        });
+
+        it('should set the correct problem details detail', function () {
+          expect((output.message as ProblemDetails).detail).toBe('Certificate definition must be an object.');
         });
       });
 
       describe('a boolean', function () {
-        it('should return a 400 bad request response', async function () {
-          const output = await fetch('http://localhost:9000/verification/verbose', {
+        let output;
+
+        beforeAll(async function () {
+          output = await fetch('http://localhost:9000/verification/verbose', {
             body: JSON.stringify({
               certificate: true
             }),
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
-          }).then((res) => {
-            return res.status;
+          }).then(async (res) => {
+            const message = await res.json();
+            return {
+              status: res.status,
+              message
+            };
           });
+        });
 
-          expect(output).toBe(400);
+        it('should return a 400 bad request response', function () {
+          expect(output.status).toBe(400);
+        });
+
+        it('should set the correct problem details title', function () {
+          expect((output.message as ProblemDetails).title).toBe('Invalid certificate definition');
+        });
+
+        it('should set the correct problem details detail', function () {
+          expect((output.message as ProblemDetails).detail).toBe('Certificate definition must be an object.');
         });
       });
 
       describe('a number', function () {
-        it('should return a 400 bad request response', async function () {
-          const output = await fetch('http://localhost:9000/verification/verbose', {
+        let output;
+
+        beforeAll(async function () {
+          output = await fetch('http://localhost:9000/verification/verbose', {
             body: JSON.stringify({
               certificate: 42
             }),
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
-          }).then((res) => {
-            return res.status;
+          }).then(async (res) => {
+            const message = await res.json();
+            return {
+              status: res.status,
+              message
+            };
           });
+        });
 
-          expect(output).toBe(400);
+        it('should return a 400 bad request response', function () {
+          expect(output.status).toBe(400);
+        });
+
+        it('should set the correct problem details title', function () {
+          expect((output.message as ProblemDetails).title).toBe('Invalid certificate definition');
+        });
+
+        it('should set the correct problem details detail', function () {
+          expect((output.message as ProblemDetails).detail).toBe('Certificate definition must be an object.');
         });
       });
 
       describe('an array', function () {
-        it('should return a 400 bad request response', async function () {
-          const output = await fetch('http://localhost:9000/verification/verbose', {
+        let output;
+
+        beforeAll(async function () {
+          output = await fetch('http://localhost:9000/verification/verbose', {
             body: JSON.stringify({
               certificate: ['certificate']
             }),
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
-          }).then((res) => {
-            return res.status;
+          }).then(async (res) => {
+            const message = await res.json();
+            return {
+              status: res.status,
+              message
+            };
           });
+        });
 
-          expect(output).toBe(400);
+        it('should return a 400 bad request response', function () {
+          expect(output.status).toBe(400);
+        });
+
+        it('should set the correct problem details title', function () {
+          expect((output.message as ProblemDetails).title).toBe('Invalid certificate definition');
+        });
+
+        it('should set the correct problem details detail', function () {
+          expect((output.message as ProblemDetails).detail).toBe('Certificate definition must be an object, not an array.');
         });
       });
 
       describe('an empty array', function () {
-        it('should return a 400 bad request response', async function () {
-          const output = await fetch('http://localhost:9000/verification/verbose', {
+        let output;
+
+        beforeAll(async function () {
+          output = await fetch('http://localhost:9000/verification/verbose', {
             body: JSON.stringify({
               certificate: []
             }),
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
-          }).then((res) => {
-            return res.status;
+          }).then(async (res) => {
+            const message = await res.json();
+            return {
+              status: res.status,
+              message
+            };
           });
+        });
 
-          expect(output).toBe(400);
+        it('should return a 400 bad request response', function () {
+          expect(output.status).toBe(400);
+        });
+
+        it('should set the correct problem details title', function () {
+          expect((output.message as ProblemDetails).title).toBe('Invalid certificate definition');
+        });
+
+        it('should set the correct problem details detail', function () {
+          expect((output.message as ProblemDetails).detail).toBe('Certificate definition must be an object, not an array.');
         });
       });
 
       describe('undefined', function () {
-        it('should return a 400 bad request response', async function () {
-          const output = await fetch('http://localhost:9000/verification/verbose', {
+        let output;
+
+        beforeAll(async function () {
+          output = await fetch('http://localhost:9000/verification/verbose', {
             body: JSON.stringify({}),
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
-          }).then((res) => {
-            return res.status;
+          }).then(async (res) => {
+            const message = await res.json();
+            return {
+              status: res.status,
+              message
+            };
           });
+        });
 
-          expect(output).toBe(400);
+        it('should return a 400 bad request response', function () {
+          expect(output.status).toBe(400);
+        });
+
+        it('should set the correct problem details title', function () {
+          expect((output.message as ProblemDetails).title).toBe('Invalid certificate definition');
+        });
+
+        it('should set the correct problem details detail', function () {
+          expect((output.message as ProblemDetails).detail).toBe('No certificate definition provided.');
         });
       });
 
       describe('body as an empty array', function () {
-        it('should return a 400 bad request response', async function () {
-          const output = await fetch('http://localhost:9000/verification/verbose', {
+        let output;
+
+        beforeAll(async function () {
+          output = await fetch('http://localhost:9000/verification/verbose', {
             body: JSON.stringify([]),
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
-          }).then((res) => {
-            return res.status;
+          }).then(async (res) => {
+            const message = await res.json();
+            return {
+              status: res.status,
+              message
+            };
           });
+        });
 
-          expect(output).toBe(400);
+        it('should return a 400 bad request response', function () {
+          expect(output.status).toBe(400);
+        });
+
+        it('should set the correct problem details title', function () {
+          expect((output.message as ProblemDetails).title).toBe('Invalid certificate definition');
+        });
+
+        it('should set the correct problem details detail', function () {
+          expect((output.message as ProblemDetails).detail).toBe('No certificate definition provided.');
         });
       });
 
       describe('null', function () {
-        it('should return a 400 bad request response', async function () {
-          const output = await fetch('http://localhost:9000/verification/verbose', {
+        let output;
+
+        beforeAll(async function () {
+          output = await fetch('http://localhost:9000/verification/verbose', {
             body: JSON.stringify({
               certificate: null
             }),
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
-          }).then((res) => {
-            return res.status;
+          }).then(async (res) => {
+            const message = await res.json();
+            return {
+              status: res.status,
+              message
+            };
           });
+        });
 
-          expect(output).toBe(400);
+        it('should return a 400 bad request response', function () {
+          expect(output.status).toBe(400);
+        });
+
+        it('should set the correct problem details title', function () {
+          expect((output.message as ProblemDetails).title).toBe('Invalid certificate definition');
+        });
+
+        it('should set the correct problem details detail', function () {
+          expect((output.message as ProblemDetails).detail).toBe('No certificate definition provided.');
         });
       });
 
       describe('an empty object', function () {
-        it('should return a 400 bad request response', async function () {
-          const output = await fetch('http://localhost:9000/verification/verbose', {
+        let output;
+
+        beforeAll(async function () {
+          output = await fetch('http://localhost:9000/verification/verbose', {
             body: JSON.stringify({
               certificate: {}
             }),
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
-          }).then((res) => {
-            return res.status;
+          }).then(async (res) => {
+            const message = await res.json();
+            return {
+              status: res.status,
+              message
+            };
           });
+        });
 
-          expect(output).toBe(400);
+        it('should return a 400 bad request response', function () {
+          expect(output.status).toBe(400);
+        });
+
+        it('should set the correct problem details title', function () {
+          expect((output.message as ProblemDetails).title).toBe('Invalid certificate definition');
+        });
+
+        it('should set the correct problem details detail', function () {
+          expect((output.message as ProblemDetails).detail).toBe('Certificate definition must not be an empty object.');
         });
       });
     });

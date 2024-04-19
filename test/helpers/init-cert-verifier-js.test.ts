@@ -1,8 +1,8 @@
-import {APIPayload} from "../../src/models/APIPayload";
+import { APIPayload } from '../../src/models/APIPayload';
 import fixture from '../fixtures/single-signature-cert.json';
-import initCertVerifierJs from "../../src/helpers/init-cert-verifier-js";
-import type {Certificate} from "@blockcerts/cert-verifier-js";
-import { type Request } from 'express';
+import initCertVerifierJs from '../../src/helpers/init-cert-verifier-js';
+import type { CertificateInitSuccess } from '../../src/helpers/init-cert-verifier-js';
+import type { Request } from 'express';
 
 describe('initCertVerifierJs test suite', function () {
   describe('locale option', function () {
@@ -17,7 +17,7 @@ describe('initCertVerifierJs test suite', function () {
           }
         };
         const result = await initCertVerifierJs(req);
-        expect((result as Certificate).locale).toBe('fr');
+        expect((result as CertificateInitSuccess).certificate.locale).toBe('fr');
       });
     });
 
@@ -29,7 +29,7 @@ describe('initCertVerifierJs test suite', function () {
           }
         };
         const result = await initCertVerifierJs(req);
-        expect((result as Certificate).locale).toBe('en-US');
+        expect((result as CertificateInitSuccess).certificate.locale).toBe('en-US');
       });
     });
   });
