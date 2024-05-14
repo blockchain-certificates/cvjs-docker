@@ -10,7 +10,7 @@ describe('verbose verification docker endpoint test suite', function () {
   describe('given the certificate is valid', function () {
     beforeAll(async function () {
       const fixture = JSON.parse(JSON.stringify(singleSignatureCert));
-      output = await fetch('http://localhost:9000/verification/verbose', {
+      output = await fetch('http://localhost:9000/credentials/verify/verbose', {
         body: JSON.stringify({
           certificate: fixture
         }),
@@ -81,7 +81,7 @@ describe('verbose verification docker endpoint test suite', function () {
   describe('given the certificate is invalid', function () {
     beforeAll(async function () {
       const fixture = JSON.parse(JSON.stringify(failingSignatureCert));
-      output = await fetch('http://localhost:9000/verification/verbose', {
+      output = await fetch('http://localhost:9000/credentials/verify/verbose', {
         body: JSON.stringify({
           certificate: fixture
         }),

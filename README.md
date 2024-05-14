@@ -21,7 +21,7 @@ A basic endpoint that gives the verification status of a certificate.
 *Request*:
 
 ```javascript
-    const verificationStatus = await fetch('http://localhost:9000/verification', {
+    const verificationStatus = await fetch('http://localhost:9000/credentials/verify', {
         body: JSON.stringify({
             certificate: blockcerts
         }),
@@ -52,7 +52,7 @@ and their status.
 *Request*: 
 
 ```javascript
-  const verificationStatus = await fetch('http://localhost:9000/verification/verbose', {
+  const verificationStatus = await fetch('http://localhost:9000/credentials/verify/verbose', {
         body: JSON.stringify({
             certificate: blockcerts
         }),

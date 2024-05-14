@@ -9,7 +9,7 @@ describe('failure handling docker endpoint test suite', function () {
     beforeAll(async function () {
       const fixture = JSON.parse(JSON.stringify(singleSignatureCert));
       fixture.issuer = 'https://this.url.leads.to.nowhere';
-      output = await fetch('http://localhost:9000/verification', {
+      output = await fetch('http://localhost:9000/credentials/verify', {
         body: JSON.stringify({
           certificate: fixture
         }),
@@ -37,7 +37,7 @@ describe('failure handling docker endpoint test suite', function () {
         let output;
 
         beforeAll(async function () {
-          output = await fetch('http://localhost:9000/verification', {
+          output = await fetch('http://localhost:9000/credentials/verify', {
             body: JSON.stringify({
               certificate: ''
             }),
@@ -69,7 +69,7 @@ describe('failure handling docker endpoint test suite', function () {
         let output;
 
         beforeAll(async function () {
-          output = await fetch('http://localhost:9000/verification', {
+          output = await fetch('http://localhost:9000/credentials/verify', {
             body: JSON.stringify({
               certificate: 'certificate'
             }),
@@ -101,7 +101,7 @@ describe('failure handling docker endpoint test suite', function () {
         let output;
 
         beforeAll(async function () {
-          output = await fetch('http://localhost:9000/verification', {
+          output = await fetch('http://localhost:9000/credentials/verify', {
             body: JSON.stringify({
               certificate: true
             }),
@@ -133,7 +133,7 @@ describe('failure handling docker endpoint test suite', function () {
         let output;
 
         beforeAll(async function () {
-          output = await fetch('http://localhost:9000/verification', {
+          output = await fetch('http://localhost:9000/credentials/verify', {
             body: JSON.stringify({
               certificate: 42
             }),
@@ -165,7 +165,7 @@ describe('failure handling docker endpoint test suite', function () {
         let output;
 
         beforeAll(async function () {
-          output = await fetch('http://localhost:9000/verification', {
+          output = await fetch('http://localhost:9000/credentials/verify', {
             body: JSON.stringify({
               certificate: ['certificate']
             }),
@@ -197,7 +197,7 @@ describe('failure handling docker endpoint test suite', function () {
         let output;
 
         beforeAll(async function () {
-          output = await fetch('http://localhost:9000/verification', {
+          output = await fetch('http://localhost:9000/credentials/verify', {
             body: JSON.stringify({
               certificate: []
             }),
@@ -229,7 +229,7 @@ describe('failure handling docker endpoint test suite', function () {
         let output;
 
         beforeAll(async function () {
-          output = await fetch('http://localhost:9000/verification', {
+          output = await fetch('http://localhost:9000/credentials/verify', {
             body: JSON.stringify({
               certificate: undefined
             }),
@@ -261,7 +261,7 @@ describe('failure handling docker endpoint test suite', function () {
         let output;
 
         beforeAll(async function () {
-          output = await fetch('http://localhost:9000/verification', {
+          output = await fetch('http://localhost:9000/credentials/verify', {
             body: JSON.stringify([]),
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
@@ -291,7 +291,7 @@ describe('failure handling docker endpoint test suite', function () {
         let output;
 
         beforeAll(async function () {
-          output = await fetch('http://localhost:9000/verification', {
+          output = await fetch('http://localhost:9000/credentials/verify', {
             body: JSON.stringify({
               certificate: null
             }),
@@ -323,7 +323,7 @@ describe('failure handling docker endpoint test suite', function () {
         let output;
 
         beforeAll(async function () {
-          output = await fetch('http://localhost:9000/verification', {
+          output = await fetch('http://localhost:9000/credentials/verify', {
             body: JSON.stringify({
               certificate: {}
             }),
@@ -359,7 +359,7 @@ describe('failure handling docker endpoint test suite', function () {
         let output;
 
         beforeAll(async function () {
-          output = await fetch('http://localhost:9000/verification/verbose', {
+          output = await fetch('http://localhost:9000/credentials/verify/verbose', {
             body: JSON.stringify({
               certificate: ''
             }),
@@ -391,7 +391,7 @@ describe('failure handling docker endpoint test suite', function () {
         let output;
 
         beforeAll(async function () {
-          output = await fetch('http://localhost:9000/verification/verbose', {
+          output = await fetch('http://localhost:9000/credentials/verify/verbose', {
             body: JSON.stringify({
               certificate: 'certificate'
             }),
@@ -423,7 +423,7 @@ describe('failure handling docker endpoint test suite', function () {
         let output;
 
         beforeAll(async function () {
-          output = await fetch('http://localhost:9000/verification/verbose', {
+          output = await fetch('http://localhost:9000/credentials/verify/verbose', {
             body: JSON.stringify({
               certificate: true
             }),
@@ -455,7 +455,7 @@ describe('failure handling docker endpoint test suite', function () {
         let output;
 
         beforeAll(async function () {
-          output = await fetch('http://localhost:9000/verification/verbose', {
+          output = await fetch('http://localhost:9000/credentials/verify/verbose', {
             body: JSON.stringify({
               certificate: 42
             }),
@@ -487,7 +487,7 @@ describe('failure handling docker endpoint test suite', function () {
         let output;
 
         beforeAll(async function () {
-          output = await fetch('http://localhost:9000/verification/verbose', {
+          output = await fetch('http://localhost:9000/credentials/verify/verbose', {
             body: JSON.stringify({
               certificate: ['certificate']
             }),
@@ -519,7 +519,7 @@ describe('failure handling docker endpoint test suite', function () {
         let output;
 
         beforeAll(async function () {
-          output = await fetch('http://localhost:9000/verification/verbose', {
+          output = await fetch('http://localhost:9000/credentials/verify/verbose', {
             body: JSON.stringify({
               certificate: []
             }),
@@ -551,7 +551,7 @@ describe('failure handling docker endpoint test suite', function () {
         let output;
 
         beforeAll(async function () {
-          output = await fetch('http://localhost:9000/verification/verbose', {
+          output = await fetch('http://localhost:9000/credentials/verify/verbose', {
             body: JSON.stringify({}),
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
@@ -581,7 +581,7 @@ describe('failure handling docker endpoint test suite', function () {
         let output;
 
         beforeAll(async function () {
-          output = await fetch('http://localhost:9000/verification/verbose', {
+          output = await fetch('http://localhost:9000/credentials/verify/verbose', {
             body: JSON.stringify([]),
             method: 'POST',
             headers: { 'Content-Type': 'application/json' }
@@ -611,7 +611,7 @@ describe('failure handling docker endpoint test suite', function () {
         let output;
 
         beforeAll(async function () {
-          output = await fetch('http://localhost:9000/verification/verbose', {
+          output = await fetch('http://localhost:9000/credentials/verify/verbose', {
             body: JSON.stringify({
               certificate: null
             }),
@@ -643,7 +643,7 @@ describe('failure handling docker endpoint test suite', function () {
         let output;
 
         beforeAll(async function () {
-          output = await fetch('http://localhost:9000/verification/verbose', {
+          output = await fetch('http://localhost:9000/credentials/verify/verbose', {
             body: JSON.stringify({
               certificate: {}
             }),

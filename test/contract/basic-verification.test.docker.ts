@@ -6,7 +6,7 @@ describe('basic verification docker endpoint test suite', function () {
   describe('when the certificate is valid', function () {
     it('should return the expected payload', async function () {
       const fixture = JSON.parse(JSON.stringify(singleSignatureCert));
-      const output = await fetch('http://localhost:9000/verification', {
+      const output = await fetch('http://localhost:9000/credentials/verify', {
         body: JSON.stringify({
           certificate: fixture
         }),
@@ -29,7 +29,7 @@ describe('basic verification docker endpoint test suite', function () {
   describe('when the certificate is invalid', function () {
     it('should return the expected payload', async function () {
       const fixture = JSON.parse(JSON.stringify(failingSignatureCert));
-      const output = await fetch('http://localhost:9000/verification', {
+      const output = await fetch('http://localhost:9000/credentials/verify', {
         body: JSON.stringify({
           certificate: fixture
         }),
