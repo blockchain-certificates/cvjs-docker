@@ -163,7 +163,9 @@ function createResponseBody (
     verificationSteps,
     issuanceDate: getIssuanceDate(certificate),
     signers: getSigners(certificate),
-    metadata: getMetadata(certificate)
+    metadata: getMetadata(certificate),
+    checks: [],
+    errors: []
   };
 }
 
