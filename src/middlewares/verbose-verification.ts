@@ -146,21 +146,44 @@ function stepVerified (verificationSteps: IVerificationMapItem[], step: Verifica
   return verificationSteps;
 }
 
+function createResponseBody (
+  req: Request<{}, {}, APIPayload>,
+  status: typeof VERIFICATION_STATUSES,
+  message: string,
+  verificationSteps: IVerificationMapItem[],
+  certificate: Certificate
+): VerboseVerificationAPIResponse {
+  const id = req.body.verifiableCredential.id;
+  const verifiedCredential = req.body.options?.returnCredential ? req.body.verifiableCredential : undefined;
+  return {
+    id,
+    status,
+    message,
+    verifiedCredential,
+    verificationSteps,
+    issuanceDate: getIssuanceDate(certificate),
+    signers: getSigners(certificate),
+    metadata: getMetadata(certificate)
+  };
+}
+
 export default async function verboseVerification (req: Request<{}, {}, APIPayload>, res: Response<VerboseVerificationAPIResponse>, certificate: Certificate): Promise<void> {
   let verificationSteps = initializeVerificationSteps(certificate);
   function verificationCb (verifiedStep) {
     stepVerified(verificationSteps, verifiedStep);
   }
 
-  const verification = await certificate.verify(verificationCb);
+  await certificate
+    .verify(verificationCb)
+    .then(({ status, message }) => {
+      console.log('Verification status:', status);
 
-  res.json({
-    id: req.body.verifiableCredential.id,
-    status: verification.status,
-    message: verification.message,
-    verificationSteps,
-    issuanceDate: getIssuanceDate(certificate),
-    signers: getSigners(certificate),
-    metadata: getMetadata(certificate)
-  });
+      if (status === VERIFICATION_STATUSES.FAILURE) {
+        console.error(`The certificate ${req.body.verifiableCredential.id} is not valid. Error: ${message}`);
+      }
+      res.json(createResponseBody(req, status, message, verificationSteps, certificate));
+    }).catch(err => {
+      console.error(err);
+      res.json(createResponseBody(req, VERIFICATION_STATUSES.FAILURE, err, verificationSteps, certificate));
+    });
 }
