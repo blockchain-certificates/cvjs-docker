@@ -3,12 +3,12 @@ import type { Request, Response } from 'express';
 export default function apiDocumentationResponse (req: Request, res: Response<string>) {
   res.send(`Cert-verifier-js server is running. 
   
-  ** POST to /verification endpoint to verify your blockcerts.
+  ** POST to /credentials/verify endpoint to verify your blockcerts.
     - expected request payload: 
     
     {
       body: JSON.stringify({
-        certificate // blockcerts document, only one document at a time
+        verifiableCredential // blockcerts document, only one document at a time
       }),
       method: 'POST',
       headers: { 'Content-Type': 'application/json' }
@@ -26,12 +26,12 @@ export default function apiDocumentationResponse (req: Request, res: Response<st
       }
     }
   
-  ** POST to /verification/verbose endpoint to verify your blockcerts and get a detailed verification process information.
+  ** POST to /credentials/verify/verbose endpoint to verify your blockcerts and get a detailed verification process information.
     - expected request payload: 
     
     {
       body: JSON.stringify({
-        certificate // blockcerts document, only one document at a time
+        verifiableCredential // blockcerts document, only one document at a time
       }),
       method: 'POST',
       headers: { 'Content-Type': 'application/json' }

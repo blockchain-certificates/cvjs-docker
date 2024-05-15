@@ -155,7 +155,7 @@ export default async function verboseVerification (req: Request<{}, {}, APIPaylo
   const verification = await certificate.verify(verificationCb);
 
   res.json({
-    id: req.body.certificate.id,
+    id: req.body.verifiableCredential.id,
     status: verification.status,
     message: verification.message,
     verificationSteps,

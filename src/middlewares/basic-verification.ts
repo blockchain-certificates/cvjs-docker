@@ -13,11 +13,11 @@ export default async function basicVerification (req: Request<{}, {}, APIPayload
       console.log('Status:', status);
 
       if (status === VERIFICATION_STATUSES.FAILURE) {
-        console.log(`The certificate ${req.body.certificate.id} is not valid. Error: ${message}`);
+        console.log(`The certificate ${req.body.verifiableCredential.id} is not valid. Error: ${message}`);
       }
 
       return res.json({
-        id: req.body.certificate.id,
+        id: req.body.verifiableCredential.id,
         status,
         message
       });
@@ -25,7 +25,7 @@ export default async function basicVerification (req: Request<{}, {}, APIPayload
     .catch(err => {
       console.log(err);
       res.json({
-        id: req.body.certificate.id,
+        id: req.body.verifiableCredential.id,
         status: VERIFICATION_STATUSES.FAILURE,
         message: err
       });

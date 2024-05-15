@@ -3,6 +3,7 @@ import singleSignatureCert from '../fixtures/single-signature-cert.json';
 import singleSignatureCertVerifiedStepAssertion from '../assertions/single-signature-cert-verified-steps.json';
 import failingSignatureCert from '../fixtures/failing-signature-cert.json';
 import failingSignatureCertVerifiedStepAssertion from '../assertions/failing-signature-cert-verified-steps.json';
+import type { APIPayload } from '../../src/models/APIPayload';
 
 describe('verbose verification docker endpoint test suite', function () {
   let output;
@@ -12,8 +13,8 @@ describe('verbose verification docker endpoint test suite', function () {
       const fixture = JSON.parse(JSON.stringify(singleSignatureCert));
       output = await fetch('http://localhost:9000/credentials/verify/verbose', {
         body: JSON.stringify({
-          certificate: fixture
-        }),
+          verifiableCredential: fixture
+        } as APIPayload),
         method: 'POST',
         headers: { 'Content-Type': 'application/json' }
       }).then((res) => res.json());
@@ -83,8 +84,8 @@ describe('verbose verification docker endpoint test suite', function () {
       const fixture = JSON.parse(JSON.stringify(failingSignatureCert));
       output = await fetch('http://localhost:9000/credentials/verify/verbose', {
         body: JSON.stringify({
-          certificate: fixture
-        }),
+          verifiableCredential: fixture
+        } as APIPayload),
         method: 'POST',
         headers: { 'Content-Type': 'application/json' }
       }).then((res) => res.json());

@@ -1,6 +1,7 @@
 import fetch from 'node-fetch-commonjs';
 import singleSignatureCert from '../fixtures/single-signature-cert.json';
 import failingSignatureCert from '../fixtures/failing-signature-cert.json';
+import type { APIPayload } from '../../src/models/APIPayload';
 
 describe('basic verification docker endpoint test suite', function () {
   describe('when the certificate is valid', function () {
@@ -8,8 +9,8 @@ describe('basic verification docker endpoint test suite', function () {
       const fixture = JSON.parse(JSON.stringify(singleSignatureCert));
       const output = await fetch('http://localhost:9000/credentials/verify', {
         body: JSON.stringify({
-          certificate: fixture
-        }),
+          verifiableCredential: fixture
+        } as APIPayload),
         method: 'POST',
         headers: { 'Content-Type': 'application/json' }
       }).then((res) => res.json());
@@ -31,8 +32,8 @@ describe('basic verification docker endpoint test suite', function () {
       const fixture = JSON.parse(JSON.stringify(failingSignatureCert));
       const output = await fetch('http://localhost:9000/credentials/verify', {
         body: JSON.stringify({
-          certificate: fixture
-        }),
+          verifiableCredential: fixture
+        } as APIPayload),
         method: 'POST',
         headers: { 'Content-Type': 'application/json' }
       }).then((res) => res.json());
