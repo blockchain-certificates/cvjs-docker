@@ -1,8 +1,8 @@
 import fetch from 'node-fetch-commonjs';
 import type { APIPayload } from '../../src/models/APIPayload';
 import singleSignatureCert from '../fixtures/single-signature-cert.json';
-import type { APIResponse } from "../../src/models/APIResponse";
-import {VerboseVerificationAPIResponse} from "../../src/middlewares/verbose-verification";
+import type { APIResponse } from '../../src/models/APIResponse';
+import type { VerboseVerificationAPIResponse } from '../../src/middlewares/verbose-verification';
 
 describe('basic verification endpoint', function () {
   const BASIC_ENDPOINT_URL = 'http://localhost:9000/credentials/verify';

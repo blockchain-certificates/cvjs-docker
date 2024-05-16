@@ -10,13 +10,13 @@ describe('initCertVerifierJs test suite', function () {
       it('should pass the information to the CVJS library', async function () {
         const req: Partial<Request<unknown, unknown, APIPayload>> = {
           body: {
-            certificate: fixture,
+            verifiableCredential: fixture,
             options: {
               locale: 'fr-FR'
             }
           }
         };
-        const result = await initCertVerifierJs(req);
+        const result = await initCertVerifierJs(req as any);
         expect((result as CertificateInitSuccess).certificate.locale).toBe('fr');
       });
     });
@@ -25,10 +25,10 @@ describe('initCertVerifierJs test suite', function () {
       it('should use the default language', async function () {
         const req: Partial<Request<unknown, unknown, APIPayload>> = {
           body: {
-            certificate: fixture
+            verifiableCredential: fixture
           }
         };
-        const result = await initCertVerifierJs(req);
+        const result = await initCertVerifierJs(req as any);
         expect((result as CertificateInitSuccess).certificate.locale).toBe('en-US');
       });
     });

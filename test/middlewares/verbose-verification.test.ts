@@ -6,6 +6,9 @@ import singleSignatureCertVerifiedStepAssertion from '../assertions/single-signa
 import multipleSignatureCertVerifiedStepAssertion from '../assertions/multiple-signature-cert-verified-steps.json';
 import failingSignatureCertVerifiedStepAssertion from '../assertions/failing-signature-cert-verified-steps.json';
 import certVerifierJs from '@blockcerts/cert-verifier-js/dist/verifier-node';
+import type { APIPayload } from "../../src/models/APIPayload";
+import type { Request } from 'express';
+
 const { Certificate } = certVerifierJs;
 
 describe('Verbose verification middleware test suite', function () {
@@ -13,9 +16,9 @@ describe('Verbose verification middleware test suite', function () {
     let result;
 
     beforeAll(async function () {
-      const req = {
+      const req: Partial<Request<{}, {}, APIPayload>> = {
         body: {
-          certificate: singleSignatureCert
+          verifiableCredential: singleSignatureCert
         }
       };
 
@@ -85,9 +88,9 @@ describe('Verbose verification middleware test suite', function () {
     it('should provide a verbose feedback of the verification process', async function () {
       let result;
 
-      const req = {
+      const req: Partial<Request<{}, {}, APIPayload>> = {
         body: {
-          certificate: singleSignatureCert
+          verifiableCredential: singleSignatureCert
         }
       };
 
@@ -108,9 +111,9 @@ describe('Verbose verification middleware test suite', function () {
     it('should provide a verbose feedback of the verification process', async function () {
       let result;
 
-      const req = {
+      const req: Partial<Request<{}, {}, APIPayload>> = {
         body: {
-          certificate: multipleSignatureCert
+          verifiableCredential: multipleSignatureCert
         }
       };
 
@@ -130,9 +133,9 @@ describe('Verbose verification middleware test suite', function () {
     it('should provide a verbose feedback of the verification process', async function () {
       let result;
 
-      const req = {
+      const req: Partial<Request<{}, {}, APIPayload>> = {
         body: {
-          certificate: failingSignatureCert
+          verifiableCredential: failingSignatureCert
         }
       };
 
