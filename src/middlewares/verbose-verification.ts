@@ -151,7 +151,9 @@ function createResponseBody (
   status: typeof VERIFICATION_STATUSES,
   message: string,
   verificationSteps: IVerificationMapItem[],
-  certificate: Certificate
+  certificate: Certificate,
+  checks: string[],
+  errors: string[]
 ): VerboseVerificationAPIResponse {
   const id = req.body.verifiableCredential.id;
   const verifiedCredential = req.body.options?.returnCredential ? req.body.verifiableCredential : undefined;
@@ -164,15 +166,23 @@ function createResponseBody (
     issuanceDate: getIssuanceDate(certificate),
     signers: getSigners(certificate),
     metadata: getMetadata(certificate),
-    checks: [],
-    errors: []
+    checks,
+    errors
   };
 }
 
 export default async function verboseVerification (req: Request<{}, {}, APIPayload>, res: Response<VerboseVerificationAPIResponse>, certificate: Certificate): Promise<void> {
   let verificationSteps = initializeVerificationSteps(certificate);
+  const errors: string[] = [];
+  const checks: string[] = [];
+
   function verificationCb (verifiedStep) {
     stepVerified(verificationSteps, verifiedStep);
+    if (verifiedStep.status === VERIFICATION_STATUSES.SUCCESS) {
+      checks.push(verifiedStep.code);
+    } else if (verifiedStep.status === VERIFICATION_STATUSES.FAILURE) {
+      errors.push(`${verifiedStep.code}: ${verifiedStep.errorMessage}`);
+    }
   }
 
   await certificate
@@ -183,9 +193,9 @@ export default async function verboseVerification (req: Request<{}, {}, APIPaylo
       if (status === VERIFICATION_STATUSES.FAILURE) {
         console.error(`The certificate ${req.body.verifiableCredential.id} is not valid. Error: ${message}`);
       }
-      res.json(createResponseBody(req, status, message, verificationSteps, certificate));
+      res.json(createResponseBody(req, status, message, verificationSteps, certificate, checks, errors));
     }).catch(err => {
       console.error(err);
-      res.json(createResponseBody(req, VERIFICATION_STATUSES.FAILURE, err, verificationSteps, certificate));
+      res.json(createResponseBody(req, VERIFICATION_STATUSES.FAILURE, err, verificationSteps, certificate, checks, errors));
     });
 }

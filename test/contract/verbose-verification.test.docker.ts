@@ -77,6 +77,25 @@ describe('verbose verification docker endpoint test suite', function () {
     it('should expose the document\'s metadata', function () {
       expect(output.metadata).toEqual(null);
     });
+
+    it('should expose the checks array to conform with VC-API', function () {
+      expect(output.checks).toEqual([
+        "getTransactionId",
+        "computeLocalHash",
+        "fetchRemoteHash",
+        "compareHashes",
+        "checkMerkleRoot",
+        "checkReceipt",
+        "parseIssuerKeys",
+        "checkAuthenticity",
+        "checkRevokedStatus",
+        "checkExpiresDate",
+      ]);
+    });
+
+    it('should expose an empty errors array to conform with VC-API', function () {
+      expect(output.errors).toEqual([]);
+    });
   });
 
   describe('given the certificate is invalid', function () {
@@ -143,6 +162,18 @@ describe('verbose verification docker endpoint test suite', function () {
 
     it('should expose the document\'s metadata', function () {
       expect(output.metadata).toEqual(null);
+    });
+
+    it('should expose the checks array to conform with VC-API', function () {
+      expect(output.checks).toEqual([
+        "getTransactionId",
+        "computeLocalHash",
+        "fetchRemoteHash"
+      ]);
+    });
+
+    it('should expose the errors array to conform with VC-API', function () {
+      expect(output.errors).toEqual(['compareHashes: Computed hash does not match remote hash']);
     });
   });
 });
