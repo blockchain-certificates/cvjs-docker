@@ -3,6 +3,7 @@ import singleSignatureCert from '../fixtures/single-signature-cert.json';
 import singleSignatureCertVerifiedStepAssertion from '../assertions/single-signature-cert-verified-steps.json';
 import failingSignatureCert from '../fixtures/failing-signature-cert.json';
 import failingSignatureCertVerifiedStepAssertion from '../assertions/failing-signature-cert-verified-steps.json';
+import type { APIPayload } from '../../src/models/APIPayload';
 
 describe('verbose verification docker endpoint test suite', function () {
   let output;
@@ -10,10 +11,10 @@ describe('verbose verification docker endpoint test suite', function () {
   describe('given the certificate is valid', function () {
     beforeAll(async function () {
       const fixture = JSON.parse(JSON.stringify(singleSignatureCert));
-      output = await fetch('http://localhost:9000/verification/verbose', {
+      output = await fetch('http://localhost:9000/credentials/verify/verbose', {
         body: JSON.stringify({
-          certificate: fixture
-        }),
+          verifiableCredential: fixture
+        } as APIPayload),
         method: 'POST',
         headers: { 'Content-Type': 'application/json' }
       }).then((res) => res.json());
@@ -76,15 +77,34 @@ describe('verbose verification docker endpoint test suite', function () {
     it('should expose the document\'s metadata', function () {
       expect(output.metadata).toEqual(null);
     });
+
+    it('should expose the checks array to conform with VC-API', function () {
+      expect(output.checks).toEqual([
+        "getTransactionId",
+        "computeLocalHash",
+        "fetchRemoteHash",
+        "compareHashes",
+        "checkMerkleRoot",
+        "checkReceipt",
+        "parseIssuerKeys",
+        "checkAuthenticity",
+        "checkRevokedStatus",
+        "checkExpiresDate",
+      ]);
+    });
+
+    it('should expose an empty errors array to conform with VC-API', function () {
+      expect(output.errors).toEqual([]);
+    });
   });
 
   describe('given the certificate is invalid', function () {
     beforeAll(async function () {
       const fixture = JSON.parse(JSON.stringify(failingSignatureCert));
-      output = await fetch('http://localhost:9000/verification/verbose', {
+      output = await fetch('http://localhost:9000/credentials/verify/verbose', {
         body: JSON.stringify({
-          certificate: fixture
-        }),
+          verifiableCredential: fixture
+        } as APIPayload),
         method: 'POST',
         headers: { 'Content-Type': 'application/json' }
       }).then((res) => res.json());
@@ -142,6 +162,18 @@ describe('verbose verification docker endpoint test suite', function () {
 
     it('should expose the document\'s metadata', function () {
       expect(output.metadata).toEqual(null);
+    });
+
+    it('should expose the checks array to conform with VC-API', function () {
+      expect(output.checks).toEqual([
+        "getTransactionId",
+        "computeLocalHash",
+        "fetchRemoteHash"
+      ]);
+    });
+
+    it('should expose the errors array to conform with VC-API', function () {
+      expect(output.errors).toEqual(['compareHashes: Computed hash does not match remote hash']);
     });
   });
 });

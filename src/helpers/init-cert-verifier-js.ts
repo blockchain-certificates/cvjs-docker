@@ -3,7 +3,9 @@ import {
   VERIFICATION_STATUSES as E_VERIFICATION_STATUSES
 } from '@blockcerts/cert-verifier-js';
 import certVerifierJs from '@blockcerts/cert-verifier-js/dist/verifier-node';
-import invalidCertificateProblemDetailsGenerator, {ProblemDetails} from "./invalid-certificate-problem-details-generator";
+import invalidCertificateProblemDetailsGenerator, { ProblemDetails } from './invalid-certificate-problem-details-generator';
+import type { Request} from 'express';
+import type { APIPayload } from '../models/APIPayload';
 
 const { Certificate, VERIFICATION_STATUSES } = certVerifierJs;
 
@@ -20,13 +22,13 @@ export interface CertificateInitSuccess {
   statusCode: number;
 }
 
-export default async function initCertVerifierJs (req): Promise<CertificateInitSuccess | CertificateInitError | ProblemDetails> {
+export default async function initCertVerifierJs (req:  Request<{}, {}, APIPayload>): Promise<CertificateInitSuccess | CertificateInitError | ProblemDetails> {
   const problemDetails = invalidCertificateProblemDetailsGenerator(req);
   if (problemDetails !== null) {
     return problemDetails;
   }
 
-  const certData = req.body.certificate;
+  const certData = req.body.verifiableCredential;
   try {
     const certificate = new Certificate(certData, req.body.options);
     await certificate.init();

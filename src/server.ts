@@ -19,7 +19,7 @@ server.get('/', (req, res) => {
   apiDocumentationResponse(req, res);
 });
 
-server.post('/verification', async (req: Request<{}, {}, APIPayload>, res: Response<APIResponse>): Promise<void> => {
+server.post('/credentials/verify', async (req: Request<{}, {}, APIPayload>, res: Response<APIResponse>): Promise<void> => {
   console.log('calling basic verification endpoint');
   const initializationResult = await initCertVerifierJs(req);
   if ((initializationResult as ProblemDetails).statusCode !== 200) {
@@ -34,7 +34,7 @@ server.post('/verification', async (req: Request<{}, {}, APIPayload>, res: Respo
 
   await basicVerification(req, res, (initializationResult as CertificateInitSuccess).certificate);
 });
-server.post('/verification/verbose', async (req: Request<{}, {}, APIPayload>, res: Response<VerboseVerificationAPIResponse | APIResponse>): Promise<void> => {
+server.post('/credentials/verify/verbose', async (req: Request<{}, {}, APIPayload>, res: Response<VerboseVerificationAPIResponse | APIResponse>): Promise<void> => {
   console.log('calling verbose verification endpoint');
   const initializationResult = await initCertVerifierJs(req);
   if ((initializationResult as ProblemDetails).statusCode !== 200) {
