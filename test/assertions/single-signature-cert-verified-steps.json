@@ -76,6 +76,12 @@
         "status": "success"
       },
       {
+        "code": "ensureValidityPeriodStarted",
+        "label": "Verifying Validity Start Date",
+        "parentStep": "statusCheck",
+        "status": "success"
+      },
+      {
         "code": "checkExpiresDate",
         "label": "Checking Expiration Date",
         "parentStep": "statusCheck",

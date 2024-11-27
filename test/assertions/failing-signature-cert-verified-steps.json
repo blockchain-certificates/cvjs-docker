@@ -80,6 +80,13 @@
         "status": "standby"
       },
       {
+        "code": "ensureValidityPeriodStarted",
+        "label": "Verify Validity Start Date",
+        "labelPending": "Verifying Validity Start Date",
+        "parentStep": "statusCheck",
+        "status": "standby"
+      },
+      {
         "code": "checkExpiresDate",
         "label": "Check Expiration Date",
         "labelPending": "Checking Expiration Date",

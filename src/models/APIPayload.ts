@@ -1,10 +1,10 @@
-import type { Blockcerts, CertificateOptions } from '@blockcerts/cert-verifier-js';
+import type { Blockcerts, CertificateOptions, VerifiableCredential } from '@blockcerts/cert-verifier-js';
 
 interface APIPayloadOptions extends CertificateOptions {
   returnCredential?: boolean;
 }
 
 export interface APIPayload {
-  verifiableCredential: Blockcerts;
+  verifiableCredential: VerifiableCredential | Blockcerts;
   options?: APIPayloadOptions;
 }
