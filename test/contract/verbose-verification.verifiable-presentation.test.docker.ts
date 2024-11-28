@@ -1,16 +1,16 @@
 import fetch from 'node-fetch-commonjs';
-import singleSignatureCert from '../fixtures/single-signature-cert.json';
-import singleSignatureCertVerifiedStepAssertion from '../assertions/single-signature-cert-verified-steps.json';
-import failingSignatureCert from '../fixtures/failing-signature-cert.json';
-import failingSignatureCertVerifiedStepAssertion from '../assertions/failing-signature-cert-verified-steps.json';
+import verifiablePresentationFixture from '../fixtures/mocknet-verifiable-presentation.json';
+import validVerifiablePresentationVerifiedStepAssertion from '../assertions/valid-verifiable-presentation-verified-steps.json';
+import failingVerifiablePresentationFixture from '../fixtures/mocknet-verifiable-presentation-failing-credential.json';
+import invalidVerifiablePresentationVerifiedStepAssertion from '../assertions/invalid-verifiable-presentation-verified-steps.json';
 import type { APIPayload } from '../../src/models/APIPayload';
 
 describe('verbose verification docker endpoint test suite', function () {
   let output;
 
-  describe('given the certificate is valid', function () {
+  describe('given the verifiable presentation is valid', function () {
     beforeAll(async function () {
-      const fixture = JSON.parse(JSON.stringify(singleSignatureCert));
+      const fixture = JSON.parse(JSON.stringify(verifiablePresentationFixture));
       output = await fetch('http://localhost:9000/credentials/verify/verbose', {
         body: JSON.stringify({
           verifiableCredential: fixture
@@ -25,7 +25,7 @@ describe('verbose verification docker endpoint test suite', function () {
     });
 
     it('should expose the id of the certificate', function () {
-      expect(output.id).toBe('urn:uuid:bbba8553-8ec1-445f-82c9-a57251dd731c');
+      expect(output.id).toBe('urn:uuid:bbba9667-8ec1-445f-82c9-a57251dd731c');
     });
 
     it('should expose the status of the verification', function () {
@@ -34,42 +34,38 @@ describe('verbose verification docker endpoint test suite', function () {
 
     it('should expose the message of the verification', function () {
       expect(output.message).toEqual({
-        label: 'Verified',
-        description: 'This is a valid ${chain} certificate.',
-        linkText: 'View transaction link'
+        description: 'Mocknet credentials are used for test purposes only. They are not recorded on a blockchain, and they should not be considered verified Blockcerts.',
+        label: 'This Mocknet credential passed all checks',
       });
     });
 
     it('should expose the verificationSteps detail', function () {
-      expect(output.verificationSteps).toEqual(singleSignatureCertVerifiedStepAssertion);
-    });
-
-    it('should expose the issuance date of the certificate in the response', function () {
-      expect(output.issuanceDate).toBe('2022-08-18T14:04:24Z');
+      expect(output.verificationSteps).toEqual(validVerifiablePresentationVerifiedStepAssertion);
     });
 
     it('should expose the signers\' information', function () {
       expect(output.signers).toEqual([
         {
-          "signingDate": "2023-03-30T15:08:26.139158",
+          "signingDate": "2024-11-18T16:55:15Z",
           "signatureSuiteType": "MerkleProof2019",
-          "issuerPublicKey": "mgdWjvq4RYAAP5goUNagTRMx7Xw534S5am",
+          "issuerPublicKey": "This mock chain does not support issuing addresses",
           "issuerName": "Blockcerts Organization",
           "issuerProfileDomain": "www.blockcerts.org",
           "issuerProfileUrl": "https://www.blockcerts.org/samples/3.0/issuer-blockcerts.json",
           "chain": {
-            "code": "testnet",
-            "blinkCode": "btc",
-            "name": "Bitcoin Testnet",
-            "signatureValue": "bitcoinTestnet",
+            "blinkCode": "mocknet",
+            "code": "mocknet",
+            "name": "Mocknet",
+            "signatureValue": "mockchain",
+            "test": true,
             "transactionTemplates": {
-              "full": "https://testnet.blockchain.info/tx/{transaction_id}",
-              "raw": "https://testnet.blockchain.info/rawtx/{transaction_id}"
+              "full": "",
+              "raw": ""
             }
           },
-          "transactionId": "188bd8713c62c0f1f1f8abf48291c33b5503dcd5b9e0ab18c0f969bb790b571a",
-          "transactionLink": "https://testnet.blockchain.info/tx/188bd8713c62c0f1f1f8abf48291c33b5503dcd5b9e0ab18c0f969bb790b571a",
-          "rawTransactionLink": "https://testnet.blockchain.info/rawtx/188bd8713c62c0f1f1f8abf48291c33b5503dcd5b9e0ab18c0f969bb790b571a"
+          "transactionId": "undefined",
+          "transactionLink": "",
+          "rawTransactionLink": ""
         }
       ]);
     });
@@ -80,17 +76,12 @@ describe('verbose verification docker endpoint test suite', function () {
 
     it('should expose the checks array to conform with VC-API', function () {
       expect(output.checks).toEqual([
-        "getTransactionId",
         "computeLocalHash",
-        "fetchRemoteHash",
         "compareHashes",
-        "checkMerkleRoot",
         "checkReceipt",
-        "parseIssuerKeys",
-        "checkAuthenticity",
         "checkRevokedStatus",
         "checkExpiresDate",
-        "ensureValidityPeriodStarted"
+        "validateDateFormat"
       ]);
     });
 
@@ -101,7 +92,7 @@ describe('verbose verification docker endpoint test suite', function () {
 
   describe('given the certificate is invalid', function () {
     beforeAll(async function () {
-      const fixture = JSON.parse(JSON.stringify(failingSignatureCert));
+      const fixture = JSON.parse(JSON.stringify(failingVerifiablePresentationFixture));
       output = await fetch('http://localhost:9000/credentials/verify/verbose', {
         body: JSON.stringify({
           verifiableCredential: fixture
@@ -116,7 +107,7 @@ describe('verbose verification docker endpoint test suite', function () {
     });
 
     it('should expose the id of the certificate', function () {
-      expect(output.id).toBe('urn:uuid:bbba8553-8ec1-445f-82c9-a57251dd731c');
+      expect(output.id).toBe('urn:uuid:bbba9667-8ec1-445f-82c9-a57251dd731c');
     });
 
     it('should expose the status of the verification', function () {
@@ -124,39 +115,36 @@ describe('verbose verification docker endpoint test suite', function () {
     });
 
     it('should expose the message of the verification', function () {
-      expect(output.message).toEqual('Computed hash does not match remote hash');
+      expect(output.message).toEqual('Credential with id urn:uuid:4f5f0100-ccbf-4ca9-9cfc-4f5fc3052d28 failed verification. Error: This certificate does not conform with the provided credential schema');
     });
 
     it('should expose the verificationSteps detail', function () {
-      expect(output.verificationSteps).toEqual(failingSignatureCertVerifiedStepAssertion);
-    });
-
-    it('should expose the issuance date of the certificate in the response', function () {
-      expect(output.issuanceDate).toBe('2022-08-18T14:04:24Z');
+      expect(output.verificationSteps).toEqual(invalidVerifiablePresentationVerifiedStepAssertion);
     });
 
     it('should expose the signers\' information', function () {
       expect(output.signers).toEqual([
         {
-          "signingDate": "2023-03-30T15:08:26.139158",
+          "signingDate": "2024-11-19T14:39:26Z",
           "signatureSuiteType": "MerkleProof2019",
-          "issuerPublicKey": "mgdWjvq4RYAAP5goUNagTRMx7Xw534S5am",
+          "issuerPublicKey": "This mock chain does not support issuing addresses",
           "issuerName": "Blockcerts Organization",
           "issuerProfileDomain": "www.blockcerts.org",
           "issuerProfileUrl": "https://www.blockcerts.org/samples/3.0/issuer-blockcerts.json",
           "chain": {
-            "code": "testnet",
-            "blinkCode": "btc",
-            "name": "Bitcoin Testnet",
-            "signatureValue": "bitcoinTestnet",
+            "blinkCode": "mocknet",
+            "code": "mocknet",
+            "name": "Mocknet",
+            "signatureValue": "mockchain",
+            "test": true,
             "transactionTemplates": {
-              "full": "https://testnet.blockchain.info/tx/{transaction_id}",
-              "raw": "https://testnet.blockchain.info/rawtx/{transaction_id}"
+              "full": "",
+              "raw": ""
             }
           },
-          "transactionId": "188bd8713c62c0f1f1f8abf48291c33b5503dcd5b9e0ab18c0f969bb790b571a",
-          "transactionLink": "https://testnet.blockchain.info/tx/188bd8713c62c0f1f1f8abf48291c33b5503dcd5b9e0ab18c0f969bb790b571a",
-          "rawTransactionLink": "https://testnet.blockchain.info/rawtx/188bd8713c62c0f1f1f8abf48291c33b5503dcd5b9e0ab18c0f969bb790b571a"
+          "transactionId": "undefined",
+          "transactionLink": "",
+          "rawTransactionLink": ""
         }
       ]);
     });
@@ -167,14 +155,17 @@ describe('verbose verification docker endpoint test suite', function () {
 
     it('should expose the checks array to conform with VC-API', function () {
       expect(output.checks).toEqual([
-        "getTransactionId",
         "computeLocalHash",
-        "fetchRemoteHash"
+        "compareHashes",
+        "checkReceipt",
+        "checkRevokedStatus",
+        "checkExpiresDate",
+        "validateDateFormat"
       ]);
     });
 
     it('should expose the errors array to conform with VC-API', function () {
-      expect(output.errors).toEqual(['compareHashes: Computed hash does not match remote hash']);
+      expect(output.errors).toEqual(['credentialVerification: Credential with id urn:uuid:4f5f0100-ccbf-4ca9-9cfc-4f5fc3052d28 failed verification. Error: This certificate does not conform with the provided credential schema']);
     });
   });
 });

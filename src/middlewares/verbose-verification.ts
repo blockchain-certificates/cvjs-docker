@@ -192,6 +192,9 @@ export default async function verboseVerification (req: Request<{}, {}, APIPaylo
 
       if (status === VERIFICATION_STATUSES.FAILURE) {
         console.error(`The certificate ${req.body.verifiableCredential.id} is not valid. Error: ${message}`);
+        if (errors.length === 0) {
+          errors.push('credentialVerification: ' + message);
+        }
       }
       res.json(createResponseBody(req, status, message, verificationSteps, certificate, checks, errors));
     }).catch(err => {

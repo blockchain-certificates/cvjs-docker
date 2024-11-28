@@ -86,6 +86,12 @@
         "label": "Checking Revoked Status"
       },
       {
+        "code": "ensureValidityPeriodStarted",
+        "label": "Verifying Validity Start Date",
+        "parentStep": "statusCheck",
+        "status": "success"
+      },
+      {
         "code": "checkExpiresDate",
         "status": "success",
         "parentStep": "statusCheck",
