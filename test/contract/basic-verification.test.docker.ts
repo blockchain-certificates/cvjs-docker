@@ -19,6 +19,7 @@ describe('basic verification docker endpoint test suite', function () {
 
       expect(output).toEqual({
         checks: [
+          "assertProofValidity",
           "getTransactionId",
           "computeLocalHash",
           "fetchRemoteHash",
@@ -56,6 +57,7 @@ describe('basic verification docker endpoint test suite', function () {
 
       expect(output).toEqual({
         checks: [
+          "assertProofValidity",
           "getTransactionId",
           "computeLocalHash",
           "fetchRemoteHash"
@@ -81,6 +83,7 @@ describe('basic verification docker endpoint test suite', function () {
 
         expect(output).toEqual({
           checks: [
+            "assertProofValidity",
             "computeLocalHash",
             "compareHashes",
             "checkReceipt",
@@ -113,6 +116,7 @@ describe('basic verification docker endpoint test suite', function () {
 
         expect(output).toEqual({
           checks: [
+            "assertProofValidity",
             "computeLocalHash",
             "compareHashes",
             "checkReceipt",

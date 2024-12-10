@@ -26,6 +26,12 @@
         "proofType": "MerkleProof2019",
         "subSteps": [
           {
+            "code": "assertProofValidity",
+            "label": "Asserting proof purpose",
+            "parentStep": "proofVerification",
+            "status": "success"
+          },
+          {
             "code": "computeLocalHash",
             "status": "success",
             "parentStep": "proofVerification",
