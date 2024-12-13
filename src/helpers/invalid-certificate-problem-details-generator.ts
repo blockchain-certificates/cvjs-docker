@@ -5,6 +5,7 @@ export interface ProblemDetails {
   title: string;
   detail: string;
   statusCode: number;
+  hasProblemDetails: boolean;
 }
 
 export default function invalidCertificateProblemDetailsGenerator (req: Request<{}, {}, APIPayload>): ProblemDetails {
@@ -25,7 +26,8 @@ export default function invalidCertificateProblemDetailsGenerator (req: Request<
     return {
       statusCode: 400,
       title,
-      detail
+      detail,
+      hasProblemDetails: true
     }
   }
 

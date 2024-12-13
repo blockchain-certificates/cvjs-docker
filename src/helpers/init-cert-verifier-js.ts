@@ -44,7 +44,7 @@ export default async function initCertVerifierJs (req:  Request<{}, {}, APIPaylo
       message: e.message,
       error: JSON.stringify(e.stack, null, 2),
       status: VERIFICATION_STATUSES.FAILURE,
-      statusCode: 200
+      statusCode: 422
     }
   }
 }

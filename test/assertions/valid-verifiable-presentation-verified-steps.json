@@ -1,1 +1,77 @@
-[{"code": "formatValidation", "isLast": false, "label": "Format validation", "labelPending": "Validating format", "status": "success", "subSteps": [{"code": "validateDateFormat", "label": "Validating date format", "parentStep": "formatValidation", "status": "success"}]}, {"code": "proofVerification", "isLast": false, "label": "Proof Verification", "labelPending": "Verifying Proof", "status": "success", "subSteps": [], "suites": [{"proofType": "MerkleProof2019", "subSteps": [{"code": "computeLocalHash", "label": "Computing local hash", "parentStep": "proofVerification", "status": "success"}, {"code": "compareHashes", "label": "Comparing hashes", "parentStep": "proofVerification", "status": "success"}, {"code": "checkReceipt", "label": "Checking Receipt", "parentStep": "proofVerification", "status": "success"}]}]}, {"code": "statusCheck", "isLast": true, "label": "Status check", "labelPending": "Checking record status", "status": "success", "subSteps": [{"code": "checkRevokedStatus", "label": "Checking Revoked Status", "parentStep": "statusCheck", "status": "success"}, {"code": "checkExpiresDate", "label": "Checking Expiration Date", "parentStep": "statusCheck", "status": "success"}]}]
+[
+  {
+    "code": "formatValidation",
+    "isLast": false,
+    "label": "Format validation",
+    "labelPending": "Validating format",
+    "status": "success",
+    "subSteps": [
+      {
+        "code": "validateDateFormat",
+        "label": "Validating date format",
+        "parentStep": "formatValidation",
+        "status": "success"
+      }
+    ]
+  },
+  {
+    "code": "proofVerification",
+    "isLast": false,
+    "label": "Proof Verification",
+    "labelPending": "Verifying Proof",
+    "status": "success",
+    "subSteps": [],
+    "suites": [
+      {
+        "proofType": "MerkleProof2019",
+        "subSteps": [
+          {
+            "code": "assertProofValidity",
+            "label": "Asserting proof purpose",
+            "parentStep": "proofVerification",
+            "status": "success"
+          },
+          {
+            "code": "computeLocalHash",
+            "label": "Computing local hash",
+            "parentStep": "proofVerification",
+            "status": "success"
+          },
+          {
+            "code": "compareHashes",
+            "label": "Comparing hashes",
+            "parentStep": "proofVerification",
+            "status": "success"
+          },
+          {
+            "code": "checkReceipt",
+            "label": "Checking Receipt",
+            "parentStep": "proofVerification",
+            "status": "success"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "code": "statusCheck",
+    "isLast": true,
+    "label": "Status check",
+    "labelPending": "Checking record status",
+    "status": "success",
+    "subSteps": [
+      {
+        "code": "checkRevokedStatus",
+        "label": "Checking Revoked Status",
+        "parentStep": "statusCheck",
+        "status": "success"
+      },
+      {
+        "code": "checkExpiresDate",
+        "label": "Checking Expiration Date",
+        "parentStep": "statusCheck",
+        "status": "success"
+      }
+    ]
+  }
+]

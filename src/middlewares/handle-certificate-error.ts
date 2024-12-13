@@ -4,7 +4,9 @@ import type { APIPayload } from '../models/APIPayload';
 
 export default function handleCertificateError (req: Request<{}, {}, APIPayload>, res, initializationResult) {
   console.error('An error occured initializing the certificate verifier', initializationResult);
-  res.json({
+  res
+    .status(422)
+    .json({
     id: req.body.verifiableCredential.id,
     status: (initializationResult as CertificateInitError).status,
     message: (initializationResult as CertificateInitError).message

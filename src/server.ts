@@ -22,7 +22,7 @@ server.get('/', (req, res) => {
 server.post('/credentials/verify', async (req: Request<{}, {}, APIPayload>, res: Response<APIResponse>): Promise<void> => {
   console.log('calling basic verification endpoint');
   const initializationResult = await initCertVerifierJs(req);
-  if ((initializationResult as ProblemDetails).statusCode !== 200) {
+  if ((initializationResult as ProblemDetails).hasProblemDetails) {
     handleCertificateProblemDetails(req, res, initializationResult as ProblemDetails);
     return;
   }

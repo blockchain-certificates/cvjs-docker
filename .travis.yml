@@ -11,3 +11,7 @@ script:
   - docker build . -t cert-verifier-js
   - docker run -p 9000:4000 -d cert-verifier-js
   - npm run test:docker
+  - cd node_modules/vc-api-verifier-test-suite
+  - npm install
+  - npm run test
+  - cd ../..

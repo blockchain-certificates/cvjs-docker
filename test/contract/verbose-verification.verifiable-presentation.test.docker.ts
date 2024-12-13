@@ -76,6 +76,7 @@ describe('verbose verification docker endpoint test suite', function () {
 
     it('should expose the checks array to conform with VC-API', function () {
       expect(output.checks).toEqual([
+        "assertProofValidity",
         "computeLocalHash",
         "compareHashes",
         "checkReceipt",
@@ -155,6 +156,7 @@ describe('verbose verification docker endpoint test suite', function () {
 
     it('should expose the checks array to conform with VC-API', function () {
       expect(output.checks).toEqual([
+        "assertProofValidity",
         "computeLocalHash",
         "compareHashes",
         "checkReceipt",
