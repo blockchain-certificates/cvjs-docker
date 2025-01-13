@@ -4,6 +4,7 @@ BLOCKCERTS_GITHUB_REPO=blockchain-certificates/cvjs-docker
 WORK_BRANCH=chore/update-version
 GITHUB_USER=botcerts
 
+echo "Creating a new pull request from $WORK_BRANCH to main"
 git checkout -b $WORK_BRANCH
 git add .version
 git commit -m "chore(Version): bump version file"
