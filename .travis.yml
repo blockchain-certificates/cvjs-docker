@@ -16,4 +16,5 @@ script:
   - npm install
   - npm run test
   - cd ../..
-  - rm .version
+after_script:
+  - sh scripts/update-version-static-file.sh
