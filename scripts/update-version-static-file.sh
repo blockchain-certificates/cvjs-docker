@@ -16,4 +16,4 @@ curl -L \
   -H "Authorization: Bearer ${BOTCERTS_PR_GITHUB_TOKEN}" \
   -H "X-GitHub-Api-Version: 2022-11-28" \
   https://api.github.com/repos/$BLOCKCERTS_GITHUB_REPO/pulls \
-  -d '{"head":"'${WORK_BRANCH}'", "base":"main", "title": "bump version file", "body": "Please review and merge @lemoustachiste"}'
+  -d '{"head":"'$WORK_BRANCH'", "base":"main", "title": "bump version file", "body": "Please review and merge @lemoustachiste"}'
