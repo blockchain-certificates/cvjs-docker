@@ -6,6 +6,7 @@ GITHUB_USER=botcerts
 git checkout -b $WORK_BRANCH
 git add .version
 git commit -m "chore(Version): bump version file"
+git push origin $WORK_BRANCH
 
 curl -vL \
   -X POST \
