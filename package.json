@@ -8,7 +8,7 @@
     "test:watch": "npm run test -- --watch",
     "test:docker": "jest --testRegex \"/*(.test.docker.ts)\"",
     "build": "docker build . -t blockcerts/cert-verifier-js:$(cat .version)",
-    "start": "docker run -p 9000:4000 -d cert-verifier-js",
+    "start": "docker run -p 9000:4000 -d blockcerts/cert-verifier-js:$(cat .version)",
     "semantic-release": "semantic-release"
   },
   "repository": {
