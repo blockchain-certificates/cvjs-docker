@@ -6,7 +6,7 @@ export default {
         [
             "@semantic-release/exec",
             {
-                "verifyReleaseCmd": "echo ${nextRelease.version} >> .version"
+                "verifyReleaseCmd": "sh ./scripts/write-version-file.sh ${nextRelease.version}"
             }
         ]
     ],
