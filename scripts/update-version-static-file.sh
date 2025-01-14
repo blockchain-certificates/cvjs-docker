@@ -6,6 +6,7 @@ GITHUB_USER=botcerts
 
 echo "Creating a new pull request from $WORK_BRANCH to main"
 git checkout -b $WORK_BRANCH
+git status
 git add .version
 git commit -m "chore(Version): bump version file"
 git push origin $WORK_BRANCH
