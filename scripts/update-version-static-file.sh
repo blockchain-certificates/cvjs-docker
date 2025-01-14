@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
+GITHUB_COM=github.com
 BLOCKCERTS_GITHUB_REPO=blockchain-certificates/cvjs-docker
+GIT_REPO=$GITHUB_COM/$BLOCKCERTS_GITHUB_REPO.git
 WORK_BRANCH=chore/update-version
 GITHUB_USER=botcerts
 
@@ -9,6 +11,9 @@ git checkout -b $WORK_BRANCH
 git status
 git add .version
 git commit -m "chore(Version): bump version file"
+
+git remote rm origin
+git remote add origin https://$GITHUB_USER:$BOTCERTS_PR_GITHUB_TOKEN@$GIT_REPO
 git push origin $WORK_BRANCH
 
 curl -L \
