@@ -89,9 +89,10 @@ describe('verbose verification docker endpoint test suite', function () {
         "checkReceipt",
         "parseIssuerKeys",
         "checkAuthenticity",
+        "verifyIssuerProfile",
         "checkRevokedStatus",
-        "checkExpiresDate",
-        "ensureValidityPeriodStarted"
+        "ensureValidityPeriodStarted",
+        "checkExpiresDate"
       ]);
     });
 
