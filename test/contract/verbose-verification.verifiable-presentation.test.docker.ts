@@ -80,9 +80,10 @@ describe('verbose verification docker endpoint test suite', function () {
         "computeLocalHash",
         "compareHashes",
         "checkReceipt",
+        "validateDateFormat",
+        "verifyIssuerProfile",
         "checkRevokedStatus",
-        "checkExpiresDate",
-        "validateDateFormat"
+        "checkExpiresDate"
       ]);
     });
 
@@ -160,9 +161,10 @@ describe('verbose verification docker endpoint test suite', function () {
         "computeLocalHash",
         "compareHashes",
         "checkReceipt",
+        "validateDateFormat",
+        "verifyIssuerProfile",
         "checkRevokedStatus",
-        "checkExpiresDate",
-        "validateDateFormat"
+        "checkExpiresDate"
       ]);
     });
 

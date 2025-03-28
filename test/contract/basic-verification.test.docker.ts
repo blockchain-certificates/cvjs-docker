@@ -28,9 +28,10 @@ describe('basic verification docker endpoint test suite', function () {
           "checkReceipt",
           "parseIssuerKeys",
           "checkAuthenticity",
+          'verifyIssuerProfile',
           "checkRevokedStatus",
-          "checkExpiresDate",
-          "ensureValidityPeriodStarted"
+          "ensureValidityPeriodStarted",
+          "checkExpiresDate"
         ],
         errors: [],
         id: 'urn:uuid:bbba8553-8ec1-445f-82c9-a57251dd731c',
@@ -87,9 +88,10 @@ describe('basic verification docker endpoint test suite', function () {
             "computeLocalHash",
             "compareHashes",
             "checkReceipt",
+            "validateDateFormat",
+            'verifyIssuerProfile',
             "checkRevokedStatus",
-            "checkExpiresDate",
-            "validateDateFormat"
+            "checkExpiresDate"
           ],
           errors: [],
           id: 'urn:uuid:bbba9667-8ec1-445f-82c9-a57251dd731c',
@@ -120,9 +122,10 @@ describe('basic verification docker endpoint test suite', function () {
             "computeLocalHash",
             "compareHashes",
             "checkReceipt",
+            "validateDateFormat",
+            'verifyIssuerProfile',
             "checkRevokedStatus",
-            "checkExpiresDate",
-            "validateDateFormat"
+            "checkExpiresDate"
           ],
           errors: [],
           id: 'urn:uuid:bbba9667-8ec1-445f-82c9-a57251dd731c',
