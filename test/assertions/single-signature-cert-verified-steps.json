@@ -69,6 +69,27 @@
     ]
   },
   {
+    "code": "identityVerification",
+    "isLast": false,
+    "label": "Identity verification",
+    "labelPending": "Verifying identity",
+    "status": "success",
+    "subSteps": [
+      {
+        "code": "verifyIssuerProfile",
+        "label": "Verifying issuer profile",
+        "parentStep": "identityVerification",
+        "status": "success"
+      }
+    ],
+    "suites": [
+      {
+        "proofType": "MerkleProof2019",
+        "subSteps": []
+      }
+    ]
+  },
+  {
     "code": "statusCheck",
     "isLast": true,
     "label": "Status check",
