@@ -15,6 +15,12 @@
             "label": "Extracting Public Key from DID Document"
           },
           {
+            "code": "ensureVerificationMethodValidity",
+            "label": "Ensuring Verification Method Validity",
+            "parentStep": "proofVerification",
+            "status": "success"
+          },
+          {
             "code": "checkDocumentSignature",
             "status": "success",
             "parentStep": "proofVerification",
