@@ -1,3 +1,4 @@
+import { describe, expect, it, beforeAll } from 'vitest';
 import verboseVerification from '../../src/middlewares/verbose-verification';
 import singleSignatureCert from '../fixtures/single-signature-cert.json';
 import failingSignatureCert from '../fixtures/failing-signature-cert.json';

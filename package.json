@@ -4,8 +4,8 @@
   "description": "A docker container for Cert-Verifier-JS node server",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
-    "test:watch": "npm run test -- --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "test:docker": "jest --testRegex \"/*(.test.docker.ts)\"",
     "build": "docker build . -t blockcerts/cert-verifier-js:$(cat .version)",
     "start": "docker run -p 9000:4000 -d blockcerts/cert-verifier-js:$(cat .version)",
@@ -46,6 +46,7 @@
     "ts-jest": "^29.1.1",
     "tslib": "^2.6.2",
     "typescript": "^5.3.3",
-    "vc-api-verifier-test-suite": "github:blockchain-certificates/vc-api-verifier-test-suite#blockcerts"
+    "vc-api-verifier-test-suite": "github:blockchain-certificates/vc-api-verifier-test-suite#blockcerts",
+    "vitest": "^3.1.1"
   }
 }
