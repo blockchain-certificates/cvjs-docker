@@ -1,3 +1,4 @@
+import { describe, expect, it, beforeAll } from 'vitest';
 import fetch from 'node-fetch-commonjs';
 import singleSignatureCert from '../fixtures/single-signature-cert.json';
 import { ProblemDetails } from '../../src/helpers/invalid-certificate-problem-details-generator';
