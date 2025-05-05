@@ -1,3 +1,4 @@
+import { describe, expect, it, beforeAll } from 'vitest';
 import { APIPayload } from '../../src/models/APIPayload';
 import fixture from '../fixtures/single-signature-cert.json';
 import initCertVerifierJs from '../../src/helpers/init-cert-verifier-js';

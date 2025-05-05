@@ -11,15 +11,16 @@
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "baseUrl": "src",
-    "module": "ESNext",
+    "module": "commonjs",
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "sourceMap": true,
     "skipLibCheck": true
   },
   "compileOnSave": false,
-  "include": ["src", "test"],
+  "include": ["src"],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "test"
   ]
 }

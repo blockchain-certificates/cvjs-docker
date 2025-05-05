@@ -6,7 +6,7 @@ branches:
 services:
   - docker
 before_script:
-  - npm run test -- --silent --noStackTrace
+  - npm run test -- --silent
   - npm run semantic-release
 script:
   - npm run build
