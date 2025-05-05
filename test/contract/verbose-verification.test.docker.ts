@@ -1,3 +1,4 @@
+import { describe, expect, it, beforeAll, afterAll } from 'vitest';
 import fetch from 'node-fetch-commonjs';
 import singleSignatureCert from '../fixtures/single-signature-cert.json';
 import singleSignatureCertVerifiedStepAssertion from '../assertions/single-signature-cert-verified-steps.json';
