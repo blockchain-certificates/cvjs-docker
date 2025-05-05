@@ -14,7 +14,7 @@ RUN npm ci
 COPY . .
 
 # transpile typescript
-RUN npx tsc
+RUN npx tsc -p tsconfig.build.json
 
 EXPOSE 4000
 CMD [ "node", "src/server.js" ]
