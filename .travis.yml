@@ -6,7 +6,7 @@ branches:
 services:
   - docker
 before_script:
-  - npm run test -- --silent --noStackTrace
+  - npm run test -- --silent
   - npm run semantic-release
 script:
   - npm run build
@@ -17,4 +17,4 @@ script:
   - npm run test
   - cd ../..
 after_script:
-  - sh scripts/update-version-static-file.sh
+  - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; sh scripts/update-version-static-file.sh; fi'

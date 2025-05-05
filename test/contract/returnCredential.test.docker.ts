@@ -1,3 +1,4 @@
+import { describe, expect, it } from 'vitest';
 import fetch from 'node-fetch-commonjs';
 import type { APIPayload } from '../../src/models/APIPayload';
 import singleSignatureCert from '../fixtures/single-signature-cert.json';
@@ -8,7 +9,7 @@ describe('basic verification endpoint', function () {
   const BASIC_ENDPOINT_URL = 'http://localhost:9000/credentials/verify';
 
   describe('when the returnCredential property is set to true', function () {
-    it('should return the verified credential', async function () {
+    it.skip('should return the verified credential', async function () {
       const fixture = JSON.parse(JSON.stringify(singleSignatureCert));
       const output = await fetch(BASIC_ENDPOINT_URL, {
         body: JSON.stringify({

@@ -1,3 +1,4 @@
+import { describe, expect, it, beforeAll, afterAll } from 'vitest';
 import fetch from 'node-fetch-commonjs';
 import verifiablePresentationFixture from '../fixtures/mocknet-verifiable-presentation.json';
 import validVerifiablePresentationVerifiedStepAssertion from '../assertions/valid-verifiable-presentation-verified-steps.json';
