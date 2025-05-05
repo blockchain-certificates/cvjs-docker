@@ -17,4 +17,4 @@ script:
   - npm run test
   - cd ../..
 after_script:
-  - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; sh scripts/update-version-static-file.sh; fi'
+  - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then sh scripts/update-version-static-file.sh; fi'
