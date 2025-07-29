@@ -6,6 +6,7 @@ import certVerifierJs from '@blockcerts/cert-verifier-js/dist/verifier-node';
 import invalidCertificateProblemDetailsGenerator, { ProblemDetails } from './invalid-certificate-problem-details-generator';
 import type { Request} from 'express';
 import type { APIPayload } from '../models/APIPayload';
+import getCredentialOrPresentation from "./getCredentialOrPresentation";
 
 const { Certificate, VERIFICATION_STATUSES } = certVerifierJs;
 
@@ -28,9 +29,12 @@ export default async function initCertVerifierJs (req:  Request<{}, {}, APIPaylo
     return problemDetails;
   }
 
-  const certData = req.body.verifiableCredential;
+  const certData = getCredentialOrPresentation(req);
   try {
-    const certificate = new Certificate(certData, req.body.options);
+    const certificate = new Certificate(certData, {
+      ...req.body.options,
+      proofPurpose: certData.proof.proofPurpose
+    });
     await certificate.init();
     return {
       certificate,

@@ -1,5 +1,6 @@
 import type { Request } from 'express';
 import type { APIPayload } from '../models/APIPayload';
+import getCredentialOrPresentation from "./getCredentialOrPresentation";
 
 export interface ProblemDetails {
   title: string;
@@ -12,13 +13,15 @@ export default function invalidCertificateProblemDetailsGenerator (req: Request<
   const title = 'Invalid certificate definition';
   let detail = '';
 
-  if (!req.body.verifiableCredential) {
+  const credentialOrPresentation = getCredentialOrPresentation(req);
+
+  if (!credentialOrPresentation) {
     detail = 'No certificate definition provided.';
-  } else if (typeof req.body.verifiableCredential !== 'object') {
+  } else if (typeof credentialOrPresentation !== 'object') {
     detail = 'Certificate definition must be an object.';
-  } else if (Array.isArray(req.body.verifiableCredential)) {
+  } else if (Array.isArray(credentialOrPresentation)) {
     detail = 'Certificate definition must be an object, not an array.';
-  } else if (Object.keys(req.body.verifiableCredential).length === 0) {
+  } else if (Object.keys(credentialOrPresentation).length === 0) {
     detail = 'Certificate definition must not be an empty object.';
   }
 

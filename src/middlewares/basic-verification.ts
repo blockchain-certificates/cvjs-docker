@@ -3,6 +3,7 @@ import type { APIResponse } from '../models/APIResponse';
 import type { Request, Response } from 'express';
 import type { APIPayload } from '../models/APIPayload';
 import type { Certificate, IVerificationStepCallbackAPI } from '@blockcerts/cert-verifier-js';
+import getCredentialOrPresentation from "../helpers/getCredentialOrPresentation";
 
 const { VERIFICATION_STATUSES } = certVerifierJs;
 
@@ -31,8 +32,8 @@ function createResponseBody (
   checks: string[],
   errors: string[]
 ): APIResponse {
-  const id = req.body.verifiableCredential.id;
-  const verifiedCredential = req.body.options?.returnCredential ? req.body.verifiableCredential : undefined;
+  const id = getCredentialOrPresentation(req).id;
+  const verifiedCredential = req.body.options?.returnCredential ? getCredentialOrPresentation(req) : undefined;
   return {
     id,
     status,
@@ -53,7 +54,7 @@ export default async function basicVerification (req: Request<{}, {}, APIPayload
       console.log('Verification status:', status);
 
       if (status === VERIFICATION_STATUSES.FAILURE) {
-        console.error(`The certificate ${req.body.verifiableCredential.id} is not valid. Error: ${message}`);
+        console.error(`The certificate ${getCredentialOrPresentation(req).id} is not valid. Error: ${message}`);
       }
 
       return res.json(createResponseBody(req, status, message, checks, errors));
