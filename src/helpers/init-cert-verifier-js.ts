@@ -33,7 +33,7 @@ export default async function initCertVerifierJs (req:  Request<{}, {}, APIPaylo
   try {
     const certificate = new Certificate(certData, {
       ...req.body.options,
-      proofPurpose: certData.proof.proofPurpose
+      proofPurpose: certData.proof?.proofPurpose ?? 'assertionMethod'
     });
     await certificate.init();
     return {
