@@ -6,6 +6,7 @@ import certVerifierJs from '@blockcerts/cert-verifier-js/dist/verifier-node';
 import invalidCertificateProblemDetailsGenerator, { ProblemDetails } from './invalid-certificate-problem-details-generator';
 import type { Request} from 'express';
 import type { APIPayload } from '../models/APIPayload';
+import getCredentialOrPresentation from "./getCredentialOrPresentation";
 
 const { Certificate, VERIFICATION_STATUSES } = certVerifierJs;
 
@@ -28,9 +29,13 @@ export default async function initCertVerifierJs (req:  Request<{}, {}, APIPaylo
     return problemDetails;
   }
 
-  const certData = req.body.verifiableCredential;
+  const certData = getCredentialOrPresentation(req);
   try {
-    const certificate = new Certificate(certData, req.body.options);
+    const certificate = new Certificate(certData, {
+      ...req.body.options,
+      // TODO: I believe this should be set by the verifier instance - maybe read as a GET parameter or hard  coded at instantiation
+      proofPurpose: certData.proof?.proofPurpose ?? 'assertionMethod'
+    });
     await certificate.init();
     return {
       certificate,

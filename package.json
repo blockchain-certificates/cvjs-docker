@@ -9,6 +9,7 @@
     "test:docker": "vitest -c vitest.docker.config.ts --testTimeout 30000",
     "build": "docker build . -t blockcerts/cert-verifier-js:$(cat .version)",
     "start": "docker run -p 9000:4000 -d blockcerts/cert-verifier-js:$(cat .version)",
+    "start:dev": "docker run -p 9000:4000 -v \"$(pwd)/../cert-verifier-js\":/usr/src/app/node_modules/@blockcerts/cert-verifier-js blockcerts/cert-verifier-js:$(cat .version)",
     "semantic-release": "semantic-release"
   },
   "repository": {
@@ -31,7 +32,7 @@
   },
   "homepage": "https://github.com/blockchain-certificates/cvjs-docker#readme",
   "dependencies": {
-    "@blockcerts/cert-verifier-js": "^6.30.1",
+    "@blockcerts/cert-verifier-js": "^6.32.0",
     "body-parser": "^1.20.2",
     "express": "^4.21.2"
   },

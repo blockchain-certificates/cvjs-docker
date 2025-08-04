@@ -19,6 +19,7 @@ import type {
 import type { Request, Response } from 'express';
 import type { APIResponse } from '../models/APIResponse';
 import type { APIPayload } from  '../models/APIPayload';
+import getCredentialOrPresentation from "../helpers/getCredentialOrPresentation";
 
 const { VERIFICATION_STATUSES } = certVerifierJs;
 
@@ -155,8 +156,8 @@ function createResponseBody (
   checks: string[],
   errors: string[]
 ): VerboseVerificationAPIResponse {
-  const id = req.body.verifiableCredential.id;
-  const verifiedCredential = req.body.options?.returnCredential ? req.body.verifiableCredential : undefined;
+  const id = getCredentialOrPresentation(req).id;
+  const verifiedCredential = req.body.options?.returnCredential ? getCredentialOrPresentation(req) : undefined;
   return {
     id,
     status,
@@ -191,7 +192,7 @@ export default async function verboseVerification (req: Request<{}, {}, APIPaylo
       console.log('Verification status:', status);
 
       if (status === VERIFICATION_STATUSES.FAILURE) {
-        console.error(`The certificate ${req.body.verifiableCredential.id} is not valid. Error: ${message}`);
+        console.error(`The certificate ${getCredentialOrPresentation(req).id} is not valid. Error: ${message}`);
         if (errors.length === 0) {
           errors.push('credentialVerification: ' + message);
         }
