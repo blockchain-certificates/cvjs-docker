@@ -33,6 +33,7 @@ export default async function initCertVerifierJs (req:  Request<{}, {}, APIPaylo
   try {
     const certificate = new Certificate(certData, {
       ...req.body.options,
+      // TODO: I believe this should be set by the verifier instance - maybe read as a GET parameter or hard  coded at instantiation
       proofPurpose: certData.proof?.proofPurpose ?? 'assertionMethod'
     });
     await certificate.init();

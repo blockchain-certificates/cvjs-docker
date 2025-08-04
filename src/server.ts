@@ -38,10 +38,11 @@ async function basicVerify (req: Request<{}, {}, APIPayload>, res: Response<APIR
 server.post('/credentials/verify', basicVerify);
 server.post('/presentations/verify', basicVerify);
 
-server.post('/credentials/verify/verbose', async (req: Request<{}, {}, APIPayload>, res: Response<VerboseVerificationAPIResponse | APIResponse>): Promise<void> => {
+
+async function verboseVerify (req: Request<{}, {}, APIPayload>, res: Response<VerboseVerificationAPIResponse | APIResponse>): Promise<void> {
   console.log('calling verbose verification endpoint');
   const initializationResult = await initCertVerifierJs(req);
-  if ((initializationResult as ProblemDetails).statusCode !== 200) {
+  if ((initializationResult as ProblemDetails).hasProblemDetails) {
     handleCertificateProblemDetails(req, res, initializationResult as ProblemDetails);
     return;
   }
@@ -52,7 +53,9 @@ server.post('/credentials/verify/verbose', async (req: Request<{}, {}, APIPayloa
   }
 
   await verboseVerification(req, res, (initializationResult as CertificateInitSuccess).certificate);
-});
+}
+server.post('/credentials/verify/verbose', verboseVerify);
+server.post('/presentations/verify/verbose', verboseVerify);
 
 server.listen(port, () => {
   console.log(`Server listening at ${port}`);
