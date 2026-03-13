@@ -8,6 +8,7 @@
     "test:watch": "vitest",
     "test:docker": "vitest -c vitest.docker.config.ts --testTimeout 30000",
     "build": "docker build . -t blockcerts/cert-verifier-js:$(cat .version)",
+    "dev": "npx tsc src/server.ts",
     "start": "docker run -p 9000:4000 -d blockcerts/cert-verifier-js:$(cat .version)",
     "start:dev": "docker run -p 9000:4000 -v \"$(pwd)/../cert-verifier-js\":/usr/src/app/node_modules/@blockcerts/cert-verifier-js blockcerts/cert-verifier-js:$(cat .version)",
     "semantic-release": "npx --package semantic-release --package @semantic-release/commit-analyzer --package @semantic-release/release-notes-generator --package @semantic-release/github --package @semantic-release/exec semantic-release"
@@ -32,7 +33,7 @@
   },
   "homepage": "https://github.com/blockchain-certificates/cvjs-docker#readme",
   "dependencies": {
-    "@blockcerts/cert-verifier-js": "^6.34.0",
+    "@blockcerts/cert-verifier-js": "^6.35.0",
     "body-parser": "^1.20.2",
     "express": "^4.21.2"
   },
@@ -43,7 +44,7 @@
     "tslib": "^2.6.2",
     "typescript": "^5.8.3",
     "vc-api-verifier-test-suite": "github:blockchain-certificates/vc-api-verifier-test-suite#blockcerts",
-    "vitest": "^3.2.4"
+    "vitest": "^4.1.0"
   },
   "overrides": {
     "picomatch": "4.0.3"
