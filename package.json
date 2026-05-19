@@ -11,6 +11,7 @@
     "dev": "npx tsc src/server.ts",
     "start": "docker run -p 9000:4000 -d blockcerts/cert-verifier-js:$(cat .version)",
     "start:dev": "docker run -p 9000:4000 -v \"$(pwd)/../cert-verifier-js\":/usr/src/app/node_modules/@blockcerts/cert-verifier-js blockcerts/cert-verifier-js:$(cat .version)",
+    "test:vc-api-verifier": "VC_API_VERIFIER_TEST_SUITE_REPO=https://github.com/blockchain-certificates/vc-api-verifier-test-suite.git VC_API_VERIFIER_TEST_SUITE_REF=blockcerts sh scripts/test-vc-api-verifier-suite.sh",
     "semantic-release": "npx --package semantic-release --package @semantic-release/commit-analyzer --package @semantic-release/release-notes-generator --package @semantic-release/github --package @semantic-release/exec semantic-release"
   },
   "repository": {
@@ -43,10 +44,6 @@
     "node-fetch-commonjs": "^3.2.4",
     "tslib": "^2.6.2",
     "typescript": "^5.8.3",
-    "vc-api-verifier-test-suite": "github:blockchain-certificates/vc-api-verifier-test-suite#blockcerts",
     "vitest": "^4.1.0"
-  },
-  "overrides": {
-    "picomatch": "4.0.3"
   }
 }

@@ -12,9 +12,6 @@ script:
   - npm run build
   - npm run start
   - npm run test:docker
-  - cd node_modules/vc-api-verifier-test-suite
-  - npm install
-  - npm run test
-  - cd ../..
+  - npm run test:vc-api-verifier
 after_script:
   - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then sh scripts/update-version-static-file.sh; fi'
