@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  test-and-release:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run unit tests
+        run: npm run test -- --silent
+
+      - name: Create release
+        run: npm run semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build Docker image
+        run: npm run build
+
+      - name: Start Docker container
+        run: npm run start
+
+      - name: Run Docker contract tests
+        run: npm run test:docker
+
+      - name: Run VC API verifier test suite
+        run: npm run test:vc-api-verifier
+
+      - name: Open version update pull request
+        if: ${{ always() }}
+        run: sh scripts/update-version-static-file.sh
+        env:
+          BOTCERTS_PR_GITHUB_TOKEN: ${{ secrets.BOTCERTS_PR_GITHUB_TOKEN }}
