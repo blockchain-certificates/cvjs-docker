@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
 
 permissions:
   contents: write
@@ -27,15 +30,16 @@ jobs:
           cache: npm
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Run unit tests
         run: npm run test -- --silent
 
       - name: Create release
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: npm run semantic-release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
       - name: Build Docker image
         run: npm run build
@@ -50,7 +54,7 @@ jobs:
         run: npm run test:vc-api-verifier
 
       - name: Open version update pull request
-        if: ${{ always() }}
+        if: always() && github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: sh scripts/update-version-static-file.sh
         env:
           BOTCERTS_PR_GITHUB_TOKEN: ${{ secrets.BOTCERTS_PR_GITHUB_TOKEN }}
