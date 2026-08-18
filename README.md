@@ -9,6 +9,23 @@
     docker run -p 9000:4000 -d cert-verifier-js ## 9000 or whatever local machine port
 ```
 
+## options
+
+Both `/credentials/verify` and `/credentials/verify/verbose` (and their `/presentations/verify` counterparts) accept an
+optional `options` object in the request body, which is passed through directly to the underlying
+[`cert-verifier-js`](https://github.com/blockchain-certificates/cert-verifier-js) `Certificate` constructor. This
+includes, notably:
+
+- `statusListCredentialCacheUrl` (`string`): caches [BitstringStatusList/StatusList2021](https://www.w3.org/TR/vc-bitstring-status-list/)
+  status list credentials fetched during revocation checks, according to their `ttl`. Since this service runs
+  server-side, it can use either an HTTP caching service URL or a relative/absolute filesystem path to a local JSON
+  cache file. See the [cert-verifier-js README](https://github.com/blockchain-certificates/cert-verifier-js#statusListCredentialCacheUrl)
+  for the full contract.
+- `returnCredential` (`boolean`): if true, includes the verified credential/presentation in the API response.
+
+See [`CertificateOptions`](https://github.com/blockchain-certificates/cert-verifier-js/blob/master/src/certificate.ts)
+in cert-verifier-js for the full list of supported options.
+
 ## example call (outputs expected API data)
 ```shell
     curl -i localhost:9000

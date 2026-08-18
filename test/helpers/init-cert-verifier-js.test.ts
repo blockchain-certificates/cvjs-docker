@@ -34,4 +34,33 @@ describe('initCertVerifierJs test suite', function () {
       });
     });
   });
+
+  describe('statusListCredentialCacheUrl option', function () {
+    describe('when statusListCredentialCacheUrl is set as an option in the request', function () {
+      it('should pass the information to the CVJS library', async function () {
+        const req: Partial<Request<unknown, unknown, APIPayload>> = {
+          body: {
+            verifiableCredential: fixture,
+            options: {
+              statusListCredentialCacheUrl: './cache/status-list-cache.json'
+            }
+          }
+        };
+        const result = await initCertVerifierJs(req as any);
+        expect((result as CertificateInitSuccess).certificate.statusListCredentialCacheUrl).toBe('./cache/status-list-cache.json');
+      });
+    });
+
+    describe('when statusListCredentialCacheUrl is not set as an option in the request', function () {
+      it('should leave it undefined', async function () {
+        const req: Partial<Request<unknown, unknown, APIPayload>> = {
+          body: {
+            verifiableCredential: fixture
+          }
+        };
+        const result = await initCertVerifierJs(req as any);
+        expect((result as CertificateInitSuccess).certificate.statusListCredentialCacheUrl).toBeUndefined();
+      });
+    });
+  });
 });
