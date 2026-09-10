@@ -12,9 +12,9 @@ describe('verbose verification docker endpoint test suite', function () {
   describe('given the verifiable presentation is valid', function () {
     beforeAll(async function () {
       const fixture = JSON.parse(JSON.stringify(verifiablePresentationFixture));
-      output = await fetch('http://localhost:9000/credentials/verify/verbose', {
+      output = await fetch('http://localhost:9000/presentations/verify/verbose', {
         body: JSON.stringify({
-          verifiableCredential: fixture
+          verifiablePresentation: fixture
         } as APIPayload),
         method: 'POST',
         headers: { 'Content-Type': 'application/json' }
@@ -96,9 +96,9 @@ describe('verbose verification docker endpoint test suite', function () {
   describe('given the certificate is invalid', function () {
     beforeAll(async function () {
       const fixture = JSON.parse(JSON.stringify(failingVerifiablePresentationFixture));
-      output = await fetch('http://localhost:9000/credentials/verify/verbose', {
+      output = await fetch('http://localhost:9000/presentations/verify/verbose', {
         body: JSON.stringify({
-          verifiableCredential: fixture
+          verifiablePresentation: fixture
         } as APIPayload),
         method: 'POST',
         headers: { 'Content-Type': 'application/json' }

@@ -75,9 +75,9 @@ describe('basic verification docker endpoint test suite', function () {
   describe('when the certificate is a verifiable presentation', function () {
     describe('and it is valid', function () {
       it('should return the expected payload', async function () {
-        const output = await fetch('http://localhost:9000/credentials/verify', {
+        const output = await fetch('http://localhost:9000/presentations/verify', {
           body: JSON.stringify({
-            verifiableCredential: verifiablePresentationFixture as any
+            verifiablePresentation: verifiablePresentationFixture as any
           } as APIPayload),
           method: 'POST',
           headers: { 'Content-Type': 'application/json' }
@@ -109,9 +109,9 @@ describe('basic verification docker endpoint test suite', function () {
   describe('when the certificate is a verifiable presentation', function () {
     describe('and it is not valid', function () {
       it('should return the expected payload', async function () {
-        const output = await fetch('http://localhost:9000/credentials/verify', {
+        const output = await fetch('http://localhost:9000/presentations/verify', {
           body: JSON.stringify({
-            verifiableCredential: failingVerifiablePresentationFixture as any
+            verifiablePresentation: failingVerifiablePresentationFixture as any
           } as APIPayload),
           method: 'POST',
           headers: { 'Content-Type': 'application/json' }
