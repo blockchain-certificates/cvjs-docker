@@ -40,12 +40,15 @@ A basic endpoint that gives the verification status of a certificate.
 ```javascript
     const verificationStatus = await fetch('http://localhost:9000/credentials/verify', {
         body: JSON.stringify({
-            certificate: blockcerts
+            verifiableCredential: blockcerts
         }),
         method: 'POST',
         headers: { 'Content-Type': 'application/json' }
     }).then((res) => res.json());
 ```
+
+The `/presentations/verify` counterpart works the same way, except the payload key is `verifiablePresentation`
+instead of `verifiableCredential`.
 
 *Response*:
 
@@ -71,12 +74,15 @@ and their status.
 ```javascript
   const verificationStatus = await fetch('http://localhost:9000/credentials/verify/verbose', {
         body: JSON.stringify({
-            certificate: blockcerts
+            verifiableCredential: blockcerts
         }),
         method: 'POST',
         headers: { 'Content-Type': 'application/json' }
     }).then((res) => res.json());
 ```
+
+The `/presentations/verify/verbose` counterpart works the same way, except the payload key is `verifiablePresentation`
+instead of `verifiableCredential`.
 
 *Response*:
 
