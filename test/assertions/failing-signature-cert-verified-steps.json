@@ -37,7 +37,11 @@
             "status": "failure",
             "parentStep": "proofVerification",
             "label": "Comparing hashes",
-            "errorMessage": "Computed hash does not match remote hash"
+            "errorMessage": "Computed hash does not match remote hash",
+            "problemDetails": {
+              "type": "https://www.w3.org/TR/vc-data-model#CRYPTOGRAPHIC_SECURITY_ERROR",
+              "detail": "Computed hash does not match remote hash"
+            }
           },
           {
             "code": "checkMerkleRoot",
